@@ -1,85 +1,102 @@
 import { Bot, Code, Smartphone, Globe, ShoppingCart, Database, Palette, Plug, Phone, Briefcase, Building, BarChart, MessageSquare, Cloud, Megaphone, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const services = [
   {
     icon: Bot,
     title: "AI Automation Solutions",
-    description: "Intelligent workflows that eliminate manual work and automate operations, support, and data handling."
+    description: "Intelligent workflows that eliminate manual work and automate operations, support, and data handling.",
+    link: "/services/ai-automation"
   },
   {
     icon: Code,
     title: "Custom Software Development",
-    description: "Full-cycle development for scalable, enterprise-level web and desktop applications."
+    description: "Full-cycle development for scalable, enterprise-level web and desktop applications.",
+    link: "/services/custom-software"
   },
   {
     icon: Smartphone,
     title: "Mobile App Development",
-    description: "Lightning-fast, beautiful apps for Android, iOS, and cross-platform solutions."
+    description: "Lightning-fast, beautiful apps for Android, iOS, and cross-platform solutions.",
+    link: "/services/mobile-app"
   },
   {
     icon: Globe,
     title: "Web App Development",
-    description: "Powerful, interactive web applications using React, Angular, Node.js, and Python."
+    description: "Powerful, interactive web applications using React, Angular, Node.js, and Python.",
+    link: "/services/web-app"
   },
   {
     icon: ShoppingCart,
     title: "E-commerce Solutions",
-    description: "E-commerce systems built to convert and scale globally with payment integrations."
+    description: "E-commerce systems built to convert and scale globally with payment integrations.",
+    link: "/services/ecommerce"
   },
   {
     icon: Database,
     title: "CRM / ERP Systems",
-    description: "Fully custom enterprise management systems with role-based access and analytics."
+    description: "Fully custom enterprise management systems with role-based access and analytics.",
+    link: "/services/crm-erp"
   },
   {
     icon: Palette,
     title: "UI/UX Design",
-    description: "Premium digital experience design with interactive prototypes and UX research."
+    description: "Premium digital experience design with interactive prototypes and UX research.",
+    link: "/services/ui-ux-design"
   },
   {
     icon: Plug,
     title: "API Development",
-    description: "Secure, scalable API engineering with REST, GraphQL, and microservices."
+    description: "Secure, scalable API engineering with REST, GraphQL, and microservices.",
+    link: "/services/api-development"
   },
   {
     icon: Phone,
     title: "Call Center Solutions",
-    description: "End-to-end modern call center systems with auto dialer and agent dashboards."
+    description: "End-to-end modern call center systems with auto dialer and agent dashboards.",
+    link: "/services/call-center"
   },
   {
     icon: Briefcase,
     title: "Business Consultancy",
-    description: "Helping companies transform operations through automation and strategic planning."
+    description: "Helping companies transform operations through automation and strategic planning.",
+    link: "/services/business-consultancy"
   },
   {
     icon: Building,
     title: "Corporate Solutions",
-    description: "Enterprise-grade digital systems with internal portals and automation pipelines."
+    description: "Enterprise-grade digital systems with internal portals and automation pipelines.",
+    link: "/services/corporate-solutions"
   },
   {
     icon: BarChart,
     title: "Data Engineering & Analytics",
-    description: "Turning raw data into meaningful insights with pipelines and BI dashboards."
+    description: "Turning raw data into meaningful insights with pipelines and BI dashboards.",
+    link: "/services/data-engineering"
   },
   {
     icon: MessageSquare,
     title: "AI Chatbot Development",
-    description: "Custom chatbots for support, sales, and automation with NLP-powered responses."
+    description: "Custom chatbots for support, sales, and automation with NLP-powered responses.",
+    link: "/services/ai-chatbot"
   },
   {
     icon: Cloud,
     title: "SaaS Product Development",
-    description: "From idea to launch to scale with multi-tenant architecture and subscription systems."
+    description: "From idea to launch to scale with multi-tenant architecture and subscription systems.",
+    link: "/services/saas"
   },
   {
     icon: Megaphone,
     title: "Digital Marketing & Branding",
-    description: "Full digital growth services including social media, paid ads, and brand design."
+    description: "Full digital growth services including social media, paid ads, and brand design.",
+    link: "/services/digital-marketing"
   },
   {
     icon: CheckCircle,
     title: "Quality Assurance & Testing",
-    description: "Ensuring flawless performance with manual, automated, and load testing."
+    description: "Ensuring flawless performance with manual, automated, and load testing.",
+    link: "/services/quality-assurance"
   }
 ];
 
