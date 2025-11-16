@@ -126,9 +126,10 @@ const Services = () => {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <div
+              <Link
                 key={index}
-                className="glass-card p-6 hover:scale-105 transition-all duration-300 group cursor-pointer"
+                to={service.link}
+                className="glass-card p-6 hover:scale-105 transition-all duration-300 group cursor-pointer block"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="mb-4 p-3 bg-primary/10 rounded-xl w-fit group-hover:bg-primary/20 transition-colors">
@@ -140,7 +141,7 @@ const Services = () => {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {service.description}
                 </p>
-              </div>
+              </Link>
             );
           })}
         </div>
