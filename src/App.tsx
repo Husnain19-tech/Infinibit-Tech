@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Portfolio from "./pages/Portfolio";
+import Quote from "./pages/Quote";
 import AIAutomation from "./pages/services/AIAutomation";
 import CustomSoftware from "./pages/services/CustomSoftware";
 import MobileApp from "./pages/services/MobileApp";
@@ -34,6 +35,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/quote" element={<Quote />} />
           <Route path="/services/ai-automation" element={<AIAutomation />} />
           <Route path="/services/custom-software" element={<CustomSoftware />} />
           <Route path="/services/mobile-app" element={<MobileApp />} />
