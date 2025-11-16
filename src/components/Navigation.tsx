@@ -48,8 +48,8 @@ const Navigation = () => {
                 {link.label}
               </a>
             ))}
-            <Button className="glass-button bg-primary text-primary-foreground hover:bg-primary/90">
-              Get a Quote
+            <Button asChild className="glass-button bg-primary text-primary-foreground hover:bg-primary/90">
+              <a href="/quote">Get a Quote</a>
             </Button>
           </div>
 
@@ -79,8 +79,8 @@ const Navigation = () => {
                 {link.label}
               </a>
             ))}
-            <Button className="w-full glass-button bg-primary text-primary-foreground hover:bg-primary/90">
-              Get a Quote
+            <Button asChild className="w-full glass-button bg-primary text-primary-foreground hover:bg-primary/90">
+              <a href="/quote">Get a Quote</a>
             </Button>
           </div>
         )}
