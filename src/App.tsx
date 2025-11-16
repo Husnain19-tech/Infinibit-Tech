@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import Portfolio from "./pages/Portfolio";
 import AIAutomation from "./pages/services/AIAutomation";
 import CustomSoftware from "./pages/services/CustomSoftware";
 import MobileApp from "./pages/services/MobileApp";
@@ -32,6 +33,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/services/ai-automation" element={<AIAutomation />} />
           <Route path="/services/custom-software" element={<CustomSoftware />} />
           <Route path="/services/mobile-app" element={<MobileApp />} />
