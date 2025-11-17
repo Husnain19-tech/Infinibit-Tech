@@ -23,6 +23,7 @@ import AIChatbot from "./pages/services/AIChatbot";
 import SaaS from "./pages/services/SaaS";
 import DigitalMarketing from "./pages/services/DigitalMarketing";
 import QualityAssurance from "./pages/services/QualityAssurance";
+import Careers from "./pages/Careers";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
           <Route path="/services/saas" element={<SaaS />} />
           <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
           <Route path="/services/quality-assurance" element={<QualityAssurance />} />
+          <Route path="/careers" element={<Careers />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
