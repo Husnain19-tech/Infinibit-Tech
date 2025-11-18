@@ -2,6 +2,7 @@ import { Globe, Rocket, Database, Lock, ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const WebApp = () => {
@@ -138,6 +139,7 @@ const WebApp = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

@@ -468,6 +468,7 @@ const Careers = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

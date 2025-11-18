@@ -2,6 +2,7 @@ import { Briefcase, TrendingUp, Target, Lightbulb, ArrowRight, Check } from "luc
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const BusinessConsultancy = () => {
@@ -132,6 +133,7 @@ const BusinessConsultancy = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

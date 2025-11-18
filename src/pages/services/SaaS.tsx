@@ -2,6 +2,7 @@ import { Cloud, Users, CreditCard, Rocket, ArrowRight, Check } from "lucide-reac
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const SaaS = () => {
@@ -138,6 +139,7 @@ const SaaS = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

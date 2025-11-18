@@ -2,6 +2,7 @@ import { Smartphone, Zap, Users, Globe2, ArrowRight, Check } from "lucide-react"
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const MobileApp = () => {
@@ -138,6 +139,7 @@ const MobileApp = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

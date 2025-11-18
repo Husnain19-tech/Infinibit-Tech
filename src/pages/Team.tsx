@@ -345,6 +345,7 @@ const Team = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };
