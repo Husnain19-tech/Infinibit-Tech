@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -145,16 +148,18 @@ export default function Quote() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-accent/5 pt-24 pb-16">
-      <div className="container max-w-4xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Get Your Project Quote
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Tell us about your project and get an instant estimate
-          </p>
-        </div>
+    <div className="min-h-screen">
+      <Navigation />
+      <div className="bg-gradient-to-b from-background via-background to-accent/5 pt-24 pb-16">
+        <div className="container max-w-4xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Get Your Project Quote
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Tell us about your project and get an instant estimate
+            </p>
+          </div>
 
         <div className="mb-8">
           <Progress value={progress} className="h-2" />
@@ -413,6 +418,9 @@ export default function Quote() {
           </div>
         </Card>
       </div>
+    </div>
+    <Footer />
+    <ChatWidget />
     </div>
   );
 }
