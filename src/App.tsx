@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Portfolio from "./pages/Portfolio";
 import Quote from "./pages/Quote";
+import Services from "./pages/Services";
 import AIAutomation from "./pages/services/AIAutomation";
 import CustomSoftware from "./pages/services/CustomSoftware";
 import MobileApp from "./pages/services/MobileApp";
@@ -38,6 +39,7 @@ const App = () => (
         <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/quote" element={<Quote />} />
           <Route path="/services/ai-automation" element={<AIAutomation />} />
