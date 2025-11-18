@@ -2,6 +2,7 @@ import { Building, Shield, Users, Workflow, ArrowRight, Check } from "lucide-rea
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const CorporateSolutions = () => {
@@ -138,6 +139,7 @@ const CorporateSolutions = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

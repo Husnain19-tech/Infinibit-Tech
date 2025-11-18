@@ -2,6 +2,7 @@ import { ShoppingCart, TrendingUp, CreditCard, Globe2, ArrowRight, Check } from 
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 
 const Ecommerce = () => {
@@ -138,6 +139,7 @@ const Ecommerce = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

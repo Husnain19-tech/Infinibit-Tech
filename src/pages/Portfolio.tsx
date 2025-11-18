@@ -272,6 +272,7 @@ const Portfolio = () => {
       </section>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 };
