@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Navigation from "@/components/Navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
@@ -150,6 +151,7 @@ export default function Quote() {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <Breadcrumbs />
       <div className="bg-gradient-to-b from-background via-background to-accent/5 pt-24 pb-16">
         <div className="container max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">

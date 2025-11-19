@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
@@ -109,6 +110,7 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <Breadcrumbs />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 overflow-hidden">

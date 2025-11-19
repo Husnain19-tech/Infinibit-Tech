@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Bot, Code, Smartphone, Globe, ShoppingCart, Database, Palette, Plug, Phone, Briefcase, Building, BarChart, MessageSquare, Cloud, Megaphone, CheckCircle } from "lucide-react";
@@ -107,6 +108,7 @@ const Services = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <Breadcrumbs />
       <main>
         <section className="relative py-32 overflow-hidden">
           {/* Background elements */}

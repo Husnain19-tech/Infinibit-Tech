@@ -1,6 +1,7 @@
 import { Bot, Zap, Brain, Workflow, ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ const AIAutomation = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
+      <Breadcrumbs />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 overflow-hidden">
