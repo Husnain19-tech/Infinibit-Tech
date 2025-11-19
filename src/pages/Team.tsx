@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -237,6 +238,7 @@ const Team = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
+      <Breadcrumbs />
       
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
