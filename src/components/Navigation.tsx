@@ -34,7 +34,7 @@ const Navigation = () => {
     { href: "/portfolio", label: "Portfolio", isRoute: true },
     { href: "/team", label: "Team", isRoute: true },
     { href: "/careers", label: "Careers", isRoute: true },
-    { href: "contact", label: "Contact", isRoute: false }
+    { href: "/contact", label: "Contact", isRoute: true }
   ];
 
   return (
