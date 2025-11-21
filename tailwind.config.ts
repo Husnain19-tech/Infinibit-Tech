@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -47,11 +51,13 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "cyan-glow": "hsl(var(--cyan-glow))",
-        "cyan-light": "hsl(var(--cyan-light))",
-        "dark-surface": "hsl(var(--dark-surface))",
-        "glass-bg": "hsl(var(--glass-bg))",
-        "glass-border": "hsl(var(--glass-border))",
+        "neon-cyan": "hsl(var(--neon-cyan))",
+        "secondary-cyan": "hsl(var(--secondary-cyan))",
+        "glow-dark": "hsl(var(--glow-dark))",
+        "heading-text": "hsl(var(--heading-text))",
+        "body-text": "hsl(var(--body-text))",
+        "glass-surface": "hsl(var(--glass-surface))",
+        "glass-border-glow": "hsl(var(--glass-border-glow))",
       },
       borderRadius: {
         lg: "var(--radius)",
