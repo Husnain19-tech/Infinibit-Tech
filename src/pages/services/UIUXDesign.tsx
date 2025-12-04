@@ -19,8 +19,8 @@ const UIUXDesign = () => {
       <Navigation />
       <Breadcrumbs />
       <ServiceHero title={serviceData.title} description={serviceData.longDescription} images={["/images/services/ui-ux-design-1.jpg", "/images/services/ui-ux-design-2.jpg", "/images/services/ui-ux-design-3.jpg"]} icon={<Palette className="w-4 h-4" />} />
-      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose UI/UX Design" features={serviceData.whyChoose} imageUrl="/images/services/ui-ux-design-why.webp" imagePosition="left" /></div></section>
-      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/ui-ux-design-tech.webp" imagePosition="right" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose UI/UX Design" features={serviceData.whyChoose} imageUrl="/images/services/ui-ux-design-2.jpg" imagePosition="left" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/ui-ux-design-3.jpg" imagePosition="right" /></div></section>
       <section className="py-20 relative"><div className="container mx-auto px-6"><div className="glass-card p-12 text-center max-w-4xl mx-auto rounded-3xl"><h2 className="text-4xl font-bold mb-4">Ready to <span className="neon-text">Design</span>?</h2><p className="text-xl text-muted-foreground mb-8">Create memorable user experiences.</p><Link to="/#contact"><Button size="lg" className="glass-button group">Get Started<svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></Button></Link></div></div></section>
       <Footer />
       <ChatWidget />

@@ -36,7 +36,7 @@ const CustomSoftware = () => {
           <InfoCard
             title="Why Choose Custom Software"
             features={serviceData.whyChoose}
-            imageUrl="/images/services/custom-software-why.webp"
+            imageUrl="/images/services/custom-software-2.jpg"
             imagePosition="left"
           />
         </div>
@@ -46,7 +46,7 @@ const CustomSoftware = () => {
         <div className="container mx-auto px-6">
           <TechStackCard
             techStack={serviceData.techStack}
-            imageUrl="/images/services/custom-software-tech.webp"
+            imageUrl="/images/services/custom-software-3.jpg"
             imagePosition="right"
           />
         </div>
