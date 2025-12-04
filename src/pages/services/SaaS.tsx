@@ -19,8 +19,8 @@ const SaaS = () => {
       <Navigation />
       <Breadcrumbs />
       <ServiceHero title={serviceData.title} description={serviceData.longDescription} images={["/images/services/saas-1.jpg", "/images/services/saas-2.jpg", "/images/services/saas-3.jpg"]} icon={<Cloud className="w-4 h-4" />} />
-      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose SaaS Development" features={serviceData.whyChoose} imageUrl="/images/services/saas-why.webp" imagePosition="left" /></div></section>
-      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/saas-tech.webp" imagePosition="right" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose SaaS Development" features={serviceData.whyChoose} imageUrl="/images/services/saas-2.jpg" imagePosition="left" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/saas-3.jpg" imagePosition="right" /></div></section>
       <section className="py-20 relative"><div className="container mx-auto px-6"><div className="glass-card p-12 text-center max-w-4xl mx-auto rounded-3xl"><h2 className="text-4xl font-bold mb-4">Ready to <span className="neon-text">Launch</span>?</h2><p className="text-xl text-muted-foreground mb-8">Build and scale your SaaS product.</p><Link to="/#contact"><Button size="lg" className="glass-button group">Get Started<svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></Button></Link></div></div></section>
       <Footer />
       <ChatWidget />

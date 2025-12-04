@@ -28,13 +28,13 @@ const MobileApp = () => {
 
       <section className="py-20 relative">
         <div className="container mx-auto px-6">
-          <InfoCard title="Why Choose Mobile App Development" features={serviceData.whyChoose} imageUrl="/images/services/mobile-app-why.webp" imagePosition="left" />
+          <InfoCard title="Why Choose Mobile App Development" features={serviceData.whyChoose} imageUrl="/images/services/mobile-app-2.jpg" imagePosition="left" />
         </div>
       </section>
 
       <section className="py-20 relative">
         <div className="container mx-auto px-6">
-          <TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/mobile-app-tech.webp" imagePosition="right" />
+          <TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/mobile-app-3.jpg" imagePosition="right" />
         </div>
       </section>
 

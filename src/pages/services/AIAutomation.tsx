@@ -40,7 +40,7 @@ const AIAutomation = () => {
           <InfoCard
             title="Why Choose AI Automation"
             features={serviceData.whyChoose}
-            imageUrl="/images/services/ai-automation-why.webp"
+            imageUrl="/images/services/ai-automation-2.jpg"
             imagePosition="left"
           />
         </div>
@@ -52,7 +52,7 @@ const AIAutomation = () => {
           <TechStackCard
             title="Tech Stack"
             techStack={serviceData.techStack}
-            imageUrl="/images/services/ai-automation-tech.webp"
+            imageUrl="/images/services/ai-automation-3.jpg"
             imagePosition="right"
           />
         </div>

@@ -19,8 +19,8 @@ const Ecommerce = () => {
       <Navigation />
       <Breadcrumbs />
       <ServiceHero title={serviceData.title} description={serviceData.longDescription} images={["/images/services/ecommerce-1.jpg", "/images/services/ecommerce-2.jpg", "/images/services/ecommerce-3.jpg"]} icon={<ShoppingCart className="w-4 h-4" />} />
-      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose E-commerce Solutions" features={serviceData.whyChoose} imageUrl="/images/services/ecommerce-why.webp" imagePosition="left" /></div></section>
-      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/ecommerce-tech.webp" imagePosition="right" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><InfoCard title="Why Choose E-commerce Solutions" features={serviceData.whyChoose} imageUrl="/images/services/ecommerce-2.jpg" imagePosition="left" /></div></section>
+      <section className="py-20 relative"><div className="container mx-auto px-6"><TechStackCard techStack={serviceData.techStack} imageUrl="/images/services/ecommerce-3.jpg" imagePosition="right" /></div></section>
       <section className="py-20 relative"><div className="container mx-auto px-6"><div className="glass-card p-12 text-center max-w-4xl mx-auto rounded-3xl"><h2 className="text-4xl font-bold mb-4">Ready to <span className="neon-text">Sell Online</span>?</h2><p className="text-xl text-muted-foreground mb-8">Launch your e-commerce store today.</p><Link to="/#contact"><Button size="lg" className="glass-button group">Get Started<svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></Button></Link></div></div></section>
       <Footer />
       <ChatWidget />
