@@ -168,63 +168,66 @@ const Team = () => {
   };
 
   const TeamMemberCard = ({ member }: { member: TeamMember }) => (
-    <Card className="glass-card border-primary/20 hover-scale group overflow-hidden">
-      <CardHeader className="text-center">
+    <Card className="glass-card border-primary/20 hover-scale group overflow-hidden h-full flex flex-col">
+      <CardHeader className="text-center relative pt-12">
+        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-primary/10 to-transparent" />
         <div className="relative mb-4 mx-auto">
-          <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300">
-            <img 
-              src={member.image} 
+          <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 group-hover:border-primary/50 transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+            <img
+              src={member.image}
               alt={member.name}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
             />
           </div>
         </div>
-        <CardTitle className="text-xl">{member.name}</CardTitle>
+        <CardTitle className="text-xl font-bold">{member.name}</CardTitle>
         <CardDescription className="text-primary font-medium">{member.role}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground text-sm mb-4 text-center">
-          {member.bio}
-        </p>
-        <div className="flex flex-wrap gap-2 justify-center mb-4">
-          {member.expertise.map((skill, idx) => (
-            <Badge key={idx} variant="secondary" className="text-xs">
-              {skill}
-            </Badge>
-          ))}
+      <CardContent className="flex-grow flex flex-col justify-between">
+        <div>
+          <p className="text-muted-foreground text-sm mb-6 text-center leading-relaxed">
+            {member.bio}
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center mb-6">
+            {member.expertise.map((skill, idx) => (
+              <Badge key={idx} variant="secondary" className="text-xs glass-card border-primary/10">
+                {skill}
+              </Badge>
+            ))}
+          </div>
         </div>
-        <div className="flex justify-center gap-3">
+        <div className="flex justify-center gap-4 pt-4 border-t border-white/5">
           {member.social.linkedin && (
-            <a 
+            <a
               href={member.social.linkedin}
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors hover:scale-110 transform duration-200"
               aria-label="LinkedIn"
             >
               <Linkedin className="w-5 h-5" />
             </a>
           )}
           {member.social.twitter && (
-            <a 
+            <a
               href={member.social.twitter}
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors hover:scale-110 transform duration-200"
               aria-label="Twitter"
             >
               <Twitter className="w-5 h-5" />
             </a>
           )}
           {member.social.github && (
-            <a 
+            <a
               href={member.social.github}
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors hover:scale-110 transform duration-200"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
             </a>
           )}
           {member.social.email && (
-            <a 
+            <a
               href={`mailto:${member.social.email}`}
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors hover:scale-110 transform duration-200"
               aria-label="Email"
             >
               <Mail className="w-5 h-5" />
@@ -239,24 +242,38 @@ const Team = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <Breadcrumbs />
-      
+
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent animate-fade-in">
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/services/business-consultancy-1.jpg"
+            alt="Team Background"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <Badge className="glass-card border-primary/30 text-primary px-6 py-2 text-sm mb-6">
+            Our People
+          </Badge>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 neon-text animate-fade-in">
             Meet Our Team
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-fade-in">
-            The brilliant minds behind Infinibit Tech. We're a diverse group of innovators, creators, 
+            The brilliant minds behind Infinibit Tech. We're a diverse group of innovators, creators,
             and problem-solvers dedicated to building the future.
           </p>
         </div>
       </section>
 
       {/* Leadership Section */}
-      <section className="py-20 px-4 bg-secondary/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+      <section className="py-20 px-4 relative">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Leadership</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Visionary leaders guiding our mission to transform businesses through technology
@@ -273,9 +290,10 @@ const Team = () => {
       </section>
 
       {/* Development Team Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+      <section className="py-20 px-4 bg-secondary/20 relative overflow-hidden">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px]" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Engineering Team</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               World-class developers building cutting-edge solutions with the latest technologies
@@ -292,9 +310,9 @@ const Team = () => {
       </section>
 
       {/* Design Team Section */}
-      <section className="py-20 px-4 bg-secondary/20">
+      <section className="py-20 px-4 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Design Team</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Creative minds crafting beautiful, intuitive experiences that users love
@@ -311,9 +329,9 @@ const Team = () => {
       </section>
 
       {/* Business Team Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-secondary/20">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Business Team</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Strategic thinkers driving growth and building lasting partnerships
@@ -330,14 +348,23 @@ const Team = () => {
       </section>
 
       {/* Join Us CTA Section */}
-      <section className="py-20 px-4 bg-secondary/20">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/services/corporate-solutions-2.jpg"
+            alt="Office Culture"
+            className="w-full h-full object-cover opacity-10"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-transparent" />
+        </div>
+
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-4xl font-bold mb-6">Want to Join Our Team?</h2>
           <p className="text-xl text-muted-foreground mb-8">
-            We're always looking for talented individuals who are passionate about technology 
+            We're always looking for talented individuals who are passionate about technology
             and want to make an impact.
           </p>
-          <a 
+          <a
             href="/careers"
             className="inline-block glass-button bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-3 rounded-md font-medium transition-all hover-scale"
           >

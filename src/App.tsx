@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
+import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import PageTransition from "./components/PageTransition";
@@ -34,43 +35,45 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <PageTransition>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/quote" element={<Quote />} />
-              <Route path="/services/ai-automation" element={<AIAutomation />} />
-              <Route path="/services/custom-software" element={<CustomSoftware />} />
-              <Route path="/services/mobile-app" element={<MobileApp />} />
-              <Route path="/services/web-app" element={<WebApp />} />
-              <Route path="/services/ecommerce" element={<Ecommerce />} />
-              <Route path="/services/crm-erp" element={<CRMERP />} />
-              <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
-              <Route path="/services/api-development" element={<APIdev />} />
-              <Route path="/services/call-center" element={<CallCenter />} />
-              <Route path="/services/business-consultancy" element={<BusinessConsultancy />} />
-              <Route path="/services/corporate-solutions" element={<CorporateSolutions />} />
-              <Route path="/services/data-engineering" element={<DataEngineering />} />
-              <Route path="/services/ai-chatbot" element={<AIChatbot />} />
-              <Route path="/services/saas" element={<SaaS />} />
-              <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
-              <Route path="/services/quality-assurance" element={<QualityAssurance />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contact" element={<ContactPage />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageTransition>
-        </BrowserRouter>
-    </TooltipProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <PageTransition>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/quote" element={<Quote />} />
+                <Route path="/services/ai-automation" element={<AIAutomation />} />
+                <Route path="/services/custom-software" element={<CustomSoftware />} />
+                <Route path="/services/mobile-app" element={<MobileApp />} />
+                <Route path="/services/web-app" element={<WebApp />} />
+                <Route path="/services/ecommerce" element={<Ecommerce />} />
+                <Route path="/services/crm-erp" element={<CRMERP />} />
+                <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
+                <Route path="/services/api-development" element={<APIdev />} />
+                <Route path="/services/call-center" element={<CallCenter />} />
+                <Route path="/services/business-consultancy" element={<BusinessConsultancy />} />
+                <Route path="/services/corporate-solutions" element={<CorporateSolutions />} />
+                <Route path="/services/data-engineering" element={<DataEngineering />} />
+                <Route path="/services/ai-chatbot" element={<AIChatbot />} />
+                <Route path="/services/saas" element={<SaaS />} />
+                <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+                <Route path="/services/quality-assurance" element={<QualityAssurance />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/contact" element={<ContactPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </PageTransition>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 

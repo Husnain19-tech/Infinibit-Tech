@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Heart, Zap, Trophy, MapPin, Clock, Briefcase } from "lucide-react";
+import { Users, Heart, Zap, Trophy, MapPin, Clock, Briefcase, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Careers = () => {
@@ -209,60 +209,86 @@ const Careers = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <Breadcrumbs />
-      
+
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text text-transparent">
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/services/corporate-solutions-2.jpg"
+            alt="Careers Background"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        </div>
+
+        <div className="max-w-7xl mx-auto text-center relative z-10">
+          <Badge className="glass-card border-primary/30 text-primary px-6 py-2 text-sm mb-6">
+            We're Hiring
+          </Badge>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 neon-text animate-fade-in">
             Join Our Team
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 animate-fade-in">
             Build the future of technology with a team that values innovation, collaboration, and growth
           </p>
         </div>
       </section>
 
       {/* Culture Section */}
-      <section className="py-20 px-4 bg-secondary/20">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px]" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold text-center mb-12">Our Culture</h2>
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <Card className="glass-card border-primary/20">
+            <Card className="glass-card border-primary/20 hover:bg-white/5 transition-colors">
               <CardHeader>
-                <CardTitle>Innovation First</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <Zap className="w-6 h-6 text-primary" />
+                  Innovation First
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed">
                   We encourage creative thinking and provide resources for experimentation. Your ideas matter, and we support turning them into reality.
                 </p>
               </CardContent>
             </Card>
-            <Card className="glass-card border-primary/20">
+            <Card className="glass-card border-primary/20 hover:bg-white/5 transition-colors">
               <CardHeader>
-                <CardTitle>Continuous Learning</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <Trophy className="w-6 h-6 text-primary" />
+                  Continuous Learning
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed">
                   Access to courses, conferences, and certifications. We invest in your growth because your success is our success.
                 </p>
               </CardContent>
             </Card>
-            <Card className="glass-card border-primary/20">
+            <Card className="glass-card border-primary/20 hover:bg-white/5 transition-colors">
               <CardHeader>
-                <CardTitle>Work-Life Harmony</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <Heart className="w-6 h-6 text-primary" />
+                  Work-Life Harmony
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed">
                   Flexible schedules, remote work options, and a culture that respects personal time. We believe happy employees create better products.
                 </p>
               </CardContent>
             </Card>
-            <Card className="glass-card border-primary/20">
+            <Card className="glass-card border-primary/20 hover:bg-white/5 transition-colors">
               <CardHeader>
-                <CardTitle>Diverse & Inclusive</CardTitle>
+                <CardTitle className="flex items-center gap-3">
+                  <Users className="w-6 h-6 text-primary" />
+                  Diverse & Inclusive
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed">
                   We celebrate diversity and foster an inclusive environment where everyone feels valued and empowered to contribute.
                 </p>
               </CardContent>
@@ -272,14 +298,17 @@ const Careers = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-20 px-4 bg-secondary/20 relative">
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-[100px]" />
+        <div className="max-w-7xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold text-center mb-12">Benefits & Perks</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
-              <Card key={index} className="glass-card border-primary/20 text-center">
+              <Card key={index} className="glass-card border-primary/20 text-center hover:scale-105 transition-transform duration-300">
                 <CardHeader>
-                  <benefit.icon className="w-12 h-12 mx-auto mb-4 text-primary" />
+                  <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+                    <benefit.icon className="w-8 h-8 text-primary" />
+                  </div>
                   <CardTitle className="text-xl">{benefit.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -292,52 +321,53 @@ const Careers = () => {
       </section>
 
       {/* Job Listings Section */}
-      <section className="py-20 px-4 bg-secondary/20">
+      <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Open Positions</h2>
           <div className="grid gap-6 mb-12">
             {jobs.map((job) => (
-              <Card key={job.id} className="glass-card border-primary/20">
+              <Card key={job.id} className="glass-card border-primary/20 hover:border-primary/50 transition-all duration-300">
                 <CardHeader>
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                     <div>
-                      <CardTitle className="text-2xl mb-2">{job.title}</CardTitle>
+                      <CardTitle className="text-2xl mb-2 text-primary">{job.title}</CardTitle>
                       <CardDescription className="text-base">{job.description}</CardDescription>
                     </div>
-                    <Button 
+                    <Button
                       onClick={() => {
                         setSelectedJob(job.id);
                         setFormData({ ...formData, position: job.title });
                         document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
                       }}
-                      className="whitespace-nowrap"
+                      className="whitespace-nowrap glass-button group"
                     >
                       Apply Now
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-4">
-                    <Badge variant="secondary" className="flex items-center gap-1">
+                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
                       <Briefcase className="w-3 h-3" />
                       {job.department}
                     </Badge>
-                    <Badge variant="secondary" className="flex items-center gap-1">
+                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
                       <MapPin className="w-3 h-3" />
                       {job.location}
                     </Badge>
-                    <Badge variant="secondary" className="flex items-center gap-1">
+                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
                       <Clock className="w-3 h-3" />
                       {job.type}
                     </Badge>
-                    <Badge variant="outline">{job.experience}</Badge>
+                    <Badge variant="outline" className="border-primary/30">{job.experience}</Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
                     <div>
-                      <h4 className="font-semibold mb-3">Requirements:</h4>
+                      <h4 className="font-semibold mb-3 text-foreground">Requirements:</h4>
                       <ul className="space-y-2">
                         {job.requirements.map((req, idx) => (
-                          <li key={idx} className="text-muted-foreground flex items-start gap-2">
+                          <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
                             <span className="text-primary mt-1">•</span>
                             <span>{req}</span>
                           </li>
@@ -345,10 +375,10 @@ const Careers = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-3">Responsibilities:</h4>
+                      <h4 className="font-semibold mb-3 text-foreground">Responsibilities:</h4>
                       <ul className="space-y-2">
                         {job.responsibilities.map((resp, idx) => (
-                          <li key={idx} className="text-muted-foreground flex items-start gap-2">
+                          <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
                             <span className="text-primary mt-1">•</span>
                             <span>{resp}</span>
                           </li>
@@ -364,11 +394,20 @@ const Careers = () => {
       </section>
 
       {/* Application Form Section */}
-      <section id="application-form" className="py-20 px-4">
-        <div className="max-w-3xl mx-auto">
+      <section id="application-form" className="py-20 px-4 bg-secondary/20 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/services/business-consultancy-2.jpg"
+            alt="Apply Background"
+            className="w-full h-full object-cover opacity-5"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/95 to-transparent" />
+        </div>
+
+        <div className="max-w-3xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold text-center mb-4">Apply Now</h2>
           <p className="text-center text-muted-foreground mb-12">
-            {selectedJob 
+            {selectedJob
               ? `Applying for: ${jobs.find(j => j.id === selectedJob)?.title}`
               : "Fill out the form below to start your journey with us"
             }
@@ -376,59 +415,67 @@ const Careers = () => {
           <Card className="glass-card border-primary/20">
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Full Name *
-                  </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="John Doe"
-                  />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      Full Name *
+                    </label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="John Doe"
+                      className="bg-background/50 border-white/10 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email Address *
+                    </label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="john@example.com"
+                      className="bg-background/50 border-white/10 focus:border-primary"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email Address *
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="john@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                    Phone Number *
-                  </label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="+1 (555) 000-0000"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="position" className="block text-sm font-medium mb-2">
-                    Position Applying For *
-                  </label>
-                  <Input
-                    id="position"
-                    name="position"
-                    value={formData.position}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="e.g., Senior Full-Stack Developer"
-                  />
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                      Phone Number *
+                    </label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="+1 (555) 000-0000"
+                      className="bg-background/50 border-white/10 focus:border-primary"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="position" className="block text-sm font-medium mb-2">
+                      Position Applying For *
+                    </label>
+                    <Input
+                      id="position"
+                      name="position"
+                      value={formData.position}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="e.g., Senior Full-Stack Developer"
+                      className="bg-background/50 border-white/10 focus:border-primary"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label htmlFor="resume" className="block text-sm font-medium mb-2">
@@ -442,6 +489,7 @@ const Careers = () => {
                     onChange={handleInputChange}
                     required
                     placeholder="https://drive.google.com/your-resume"
+                    className="bg-background/50 border-white/10 focus:border-primary"
                   />
                   <p className="text-xs text-muted-foreground mt-1">
                     Please provide a link to your resume (Google Drive, Dropbox, etc.)
@@ -458,10 +506,12 @@ const Careers = () => {
                     onChange={handleInputChange}
                     placeholder="Tell us why you'd be a great fit for this role..."
                     rows={6}
+                    className="bg-background/50 border-white/10 focus:border-primary resize-none"
                   />
                 </div>
-                <Button type="submit" size="lg" className="w-full">
+                <Button type="submit" size="lg" className="w-full glass-button group">
                   Submit Application
+                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </form>
             </CardContent>
