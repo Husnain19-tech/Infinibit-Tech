@@ -6,116 +6,207 @@ import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter, ExternalLink, Globe, Layers } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const categories = ["All", "E-Commerce", "AI Solutions", "Fintech", "Enterprise"];
+  const categories = ["All", "E-Commerce", "Healthcare", "Real Estate", "Non-Profit", "Business", "Lifestyle"];
 
-  const caseStudies = [
+  const wixProjects = [
     {
       id: 1,
-      title: "E-Commerce Platform Transformation",
-      client: "RetailCo Global",
+      title: "Izzy Wheels",
       category: "E-Commerce",
-      image: "/images/services/ecommerce-1.jpg",
-      description: "Complete digital transformation of a legacy retail system into a modern, scalable e-commerce platform.",
-      challenge: "RetailCo was struggling with a 15-year-old monolithic system that couldn't handle peak traffic and had a 68% cart abandonment rate.",
-      solution: "Built a microservices-based e-commerce platform with AI-powered recommendations, real-time inventory, and seamless checkout experience.",
-      metrics: [
-        { label: "Revenue Increase", before: "$2.4M", after: "$8.1M", growth: "+237%" },
-        { label: "Cart Abandonment", before: "68%", after: "24%", growth: "-65%" },
-        { label: "Page Load Time", before: "8.2s", after: "1.1s", growth: "-87%" },
-        { label: "Mobile Conversions", before: "12%", after: "42%", growth: "+250%" }
+      image: "/images/portfolio/izzy-wheels.jpg",
+      url: "https://www.izzywheels.com/",
+      description: "Award-winning designer wheelchair covers transforming mobility aids into fashion statements. Featured in Vogue, Forbes, ELLE, and BBC.",
+      features: [
+        "E-Commerce Store with Wix Stores",
+        "Multi-currency Support",
+        "Disney & Wicked Collaborations",
+        "Public Speaking Booking System"
       ],
-      techStack: ["React", "Node.js", "PostgreSQL", "Redis", "AWS", "Stripe"],
-      testimonial: {
-        text: "Infinibit Tech transformed our business. The new platform not only handles 10x our previous traffic but has tripled our revenue in just 6 months.",
-        author: "Sarah Chen",
-        position: "CTO, RetailCo Global"
-      },
-      duration: "4 months",
-      team: "8 developers"
+      techStack: ["Wix Velo", "Wix Stores", "Wix Payments", "Custom CSS", "Wix Members"],
+      industry: "Fashion & Accessibility",
+      type: "E-Commerce Website"
     },
     {
       id: 2,
-      title: "AI-Powered Healthcare Management",
-      client: "MediCare Plus",
-      category: "AI Solutions",
-      image: "/images/services/ai-automation-1.jpg",
-      description: "Revolutionary healthcare platform with AI diagnostics assistance and patient management.",
-      challenge: "Manual patient record management leading to 40% administrative overhead and delayed care decisions.",
-      solution: "Developed an AI-powered system with predictive analytics, automated record management, and real-time patient monitoring.",
-      metrics: [
-        { label: "Admin Time Saved", before: "40%", after: "8%", growth: "-80%" },
-        { label: "Patient Satisfaction", before: "72%", after: "94%", growth: "+31%" },
-        { label: "Diagnosis Accuracy", before: "85%", after: "97%", growth: "+14%" },
-        { label: "Response Time", before: "45min", after: "5min", growth: "-89%" }
+      title: "Babe Formula",
+      category: "E-Commerce",
+      image: "/images/portfolio/babe-formula.jpg",
+      url: "https://www.babe-formula.com/",
+      description: "Premium hair care solutions crafted with intention. Elegant e-commerce platform with sophisticated brand presence.",
+      features: [
+        "Product Catalog Management",
+        "Shopping Cart & Checkout",
+        "Newsletter Integration",
+        "Social Media Integration"
       ],
-      techStack: ["Python", "TensorFlow", "React", "FastAPI", "MongoDB", "Azure"],
-      testimonial: {
-        text: "The AI system has revolutionized how we deliver care. We're seeing patients faster and making better-informed decisions.",
-        author: "Dr. Michael Torres",
-        position: "Chief Medical Officer, MediCare Plus"
-      },
-      duration: "6 months",
-      team: "12 developers"
+      techStack: ["Wix Velo", "Wix Stores", "Wix Forms", "Custom Animations", "Wix CRM"],
+      industry: "Beauty & Personal Care",
+      type: "E-Commerce Website"
     },
     {
       id: 3,
-      title: "Fintech Mobile Banking App",
-      client: "NeoBank Digital",
-      category: "Fintech",
-      image: "/images/services/mobile-app-1.jpg",
-      description: "Next-generation mobile banking app with AI fraud detection and instant transfers.",
-      challenge: "Traditional banking app with poor UX, high fraud rates, and slow transaction processing.",
-      solution: "Built a modern mobile-first banking platform with biometric security, real-time fraud detection, and instant P2P transfers.",
-      metrics: [
-        { label: "User Growth", before: "50K", after: "850K", growth: "+1600%" },
-        { label: "Fraud Incidents", before: "2.4%", after: "0.1%", growth: "-96%" },
-        { label: "Transaction Speed", before: "2-3 days", after: "Instant", growth: "100%" },
-        { label: "App Rating", before: "2.8★", after: "4.8★", growth: "+71%" }
+      title: "Evolve Clothing Gallery",
+      category: "E-Commerce",
+      image: "/images/portfolio/evolve-clothing.jpg",
+      url: "https://www.evolveclothinggallery.com/",
+      description: "Premium streetwear and sneaker destination featuring top brands like Adidas, Dr. Martens, and exclusive collections.",
+      features: [
+        "Advanced Product Filtering",
+        "Gift Card System",
+        "Brand Categories",
+        "New Arrivals Section"
       ],
-      techStack: ["React Native", "Node.js", "MongoDB", "TensorFlow", "AWS", "Plaid"],
-      testimonial: {
-        text: "Infinibit Tech delivered beyond expectations. Our user base grew 16x and fraud is virtually eliminated.",
-        author: "James Wilson",
-        position: "CEO, NeoBank Digital"
-      },
-      duration: "5 months",
-      team: "10 developers"
+      techStack: ["Wix Velo", "Wix Stores", "Wix Gift Cards", "Custom Product Pages", "Wix Analytics"],
+      industry: "Fashion & Streetwear",
+      type: "E-Commerce Website"
     },
     {
       id: 4,
-      title: "Enterprise CRM with AI Analytics",
-      client: "SalesPro Enterprise",
-      category: "Enterprise",
-      image: "/images/services/crm-erp-1.jpg",
-      description: "Intelligent CRM platform with predictive analytics and automated lead scoring.",
-      challenge: "Scattered customer data across 12 different tools, leading to missed opportunities and poor customer insights.",
-      solution: "Unified CRM platform with AI-powered lead scoring, automated workflows, and comprehensive analytics dashboard.",
-      metrics: [
-        { label: "Sales Efficiency", before: "42%", after: "87%", growth: "+107%" },
-        { label: "Lead Conversion", before: "8%", after: "28%", growth: "+250%" },
-        { label: "Data Accuracy", before: "63%", after: "98%", growth: "+56%" },
-        { label: "Customer Retention", before: "71%", after: "92%", growth: "+30%" }
+      title: "Industrial Jewellery",
+      category: "E-Commerce",
+      image: "/images/portfolio/industrial-jewellery.jpg",
+      url: "https://www.industrial-jewellery.com/",
+      description: "Unique handcrafted jewelry store featuring leather goods and timeless pieces with seasonal collections and holiday specials.",
+      features: [
+        "Email Popup with Discount",
+        "Seasonal Collections",
+        "Holiday Jewelry Section",
+        "Sample Sale Integration"
       ],
-      techStack: ["Vue.js", "Django", "PostgreSQL", "Redis", "Python", "GCP"],
-      testimonial: {
-        text: "The AI-powered insights have transformed our sales process. We're closing deals 3x faster with higher success rates.",
-        author: "Linda Martinez",
-        position: "VP of Sales, SalesPro Enterprise"
-      },
-      duration: "7 months",
-      team: "14 developers"
+      techStack: ["Wix Velo", "Wix Stores", "Wix Email Marketing", "Custom Popups", "Wix Bookings"],
+      industry: "Jewelry & Accessories",
+      type: "E-Commerce Website"
+    },
+    {
+      id: 5,
+      title: "Raya Del Sol Panama",
+      category: "Real Estate",
+      image: "/images/portfolio/raya-del-sol.jpg",
+      url: "https://www.rayadelsolpanama.com/",
+      description: "Sustainable living community in Playa Venao, Panama. Eco-conscious real estate development with regenerative infrastructure.",
+      features: [
+        "Interactive Site Plan",
+        "Property Models Showcase",
+        "Sustainability Features",
+        "Partner Directory"
+      ],
+      techStack: ["Wix Velo", "Wix Pro Gallery", "Custom Maps Integration", "Wix Video", "Wix Forms"],
+      industry: "Real Estate & Sustainability",
+      type: "Real Estate Website"
+    },
+    {
+      id: 6,
+      title: "WAMI - Women's Community Justice",
+      category: "Non-Profit",
+      image: "/images/portfolio/wami.jpg",
+      url: "https://wamict.org/",
+      description: "Decade of excellence in educating, elevating, and empowering women and families. Non-profit focused on community justice.",
+      features: [
+        "Donation System",
+        "Impact Stories Videos",
+        "Program Pages",
+        "Volunteer Signup"
+      ],
+      techStack: ["Wix Velo", "Wix Donations", "Wix Video", "Wix Events", "Wix Members"],
+      industry: "Non-Profit & Advocacy",
+      type: "Non-Profit Website"
+    },
+    {
+      id: 7,
+      title: "New Commonwealth Schools",
+      category: "Non-Profit",
+      image: "/images/portfolio/new-commonwealth.jpg",
+      url: "https://www.newcommonwealthschools.org/",
+      description: "Family-run non-profit private schools designed to last 20+ years. One-day-a-week educational programs with rave reviews.",
+      features: [
+        "School Information System",
+        "Testimonials Section",
+        "Contact Forms",
+        "Event Calendar"
+      ],
+      techStack: ["Wix Velo", "Wix Forms", "Wix Events", "Wix Blog", "Custom Testimonials"],
+      industry: "Education",
+      type: "Educational Website"
+    },
+    {
+      id: 8,
+      title: "Heard You Need Chauffeur",
+      category: "Business",
+      image: "/images/portfolio/chauffeur-service.jpg",
+      url: "https://www.heardyouneed.com/",
+      description: "Premium personal chauffeur and car rental service in Nashville, Tennessee. Luxury transportation with style.",
+      features: [
+        "Service Booking System",
+        "Fleet Gallery",
+        "Quote Request Forms",
+        "Client Testimonials"
+      ],
+      techStack: ["Wix Velo", "Wix Bookings", "Wix Forms", "Wix Pro Gallery", "Custom Animations"],
+      industry: "Transportation & Luxury",
+      type: "Service Business Website"
+    },
+    {
+      id: 9,
+      title: "Growth Method Consulting",
+      category: "Business",
+      image: "/images/portfolio/growth-consulting.jpg",
+      url: "https://david39192.wixsite.com/mysite",
+      description: "Mobile app and SaaS growth consulting. Proven method to scale businesses beyond expectations with team alignment.",
+      features: [
+        "Consultation Scheduling",
+        "Case Studies",
+        "Stages of Evolution Guide",
+        "Contact Integration"
+      ],
+      techStack: ["Wix Velo", "Wix Bookings", "Wix Blog", "Custom Landing Pages", "Wix Analytics"],
+      industry: "Consulting & Tech",
+      type: "Business Consulting Website"
+    },
+    {
+      id: 10,
+      title: "Daley Inventories",
+      category: "Business",
+      image: "/images/portfolio/daley-inventories.jpg",
+      url: "https://www.daleyinventories.com/",
+      description: "Professional property inventory services with accredited clerks. Comprehensive reports, gas safety, and electrical checks.",
+      features: [
+        "Online Booking System",
+        "Price Calculator",
+        "Service Categories",
+        "Brochure Downloads"
+      ],
+      techStack: ["Wix Velo", "Wix Bookings", "Wix Forms", "Wix Pricing Tables", "Custom Documents"],
+      industry: "Property Services",
+      type: "Service Business Website"
+    },
+    {
+      id: 11,
+      title: "Let's Get Social Raleigh",
+      category: "Lifestyle",
+      image: "/images/portfolio/lets-get-social.jpg",
+      url: "https://www.letsgetsocialraleigh.com/",
+      description: "Community engagement and events platform in Raleigh. Major programs for economic and community development.",
+      features: [
+        "Event Calendar",
+        "City Partnership Info",
+        "Program Directory",
+        "Community Impact Stats"
+      ],
+      techStack: ["Wix Velo", "Wix Events", "Wix Bookings", "Custom Calendar", "Wix CRM"],
+      industry: "Community & Events",
+      type: "Community Platform"
     }
   ];
 
-  const filteredCases = activeCategory === "All"
-    ? caseStudies
-    : caseStudies.filter(study => study.category === activeCategory);
+  const filteredProjects = activeCategory === "All"
+    ? wixProjects
+    : wixProjects.filter(project => project.category === activeCategory);
 
   return (
     <div className="min-h-screen">
@@ -128,13 +219,13 @@ const Portfolio = () => {
         <div className="container mx-auto relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-6 animate-fade-in">
             <Badge className="glass-card border-primary/30 text-primary px-6 py-2 text-sm">
-              Our Success Stories
+              Our Client Projects
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold neon-text">
-              Portfolio & Case Studies
+              Portfolio & Delivered Projects
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Real results from real clients. See how we've transformed businesses across industries with cutting-edge technology and innovative solutions.
+              Showcasing our expertise in building stunning, functional websites for clients worldwide. Each project represents our commitment to excellence and client satisfaction.
             </p>
           </div>
         </div>
@@ -147,8 +238,8 @@ const Portfolio = () => {
             {[
               { value: "500+", label: "Projects Delivered" },
               { value: "98%", label: "Client Satisfaction" },
-              { value: "$250M+", label: "Revenue Generated" },
-              { value: "50+", label: "Industries Served" }
+              { value: "50+", label: "Industries Served" },
+              { value: "24/7", label: "Support Available" }
             ].map((stat, index) => (
               <Card key={index} className="glass-card text-center p-6 hover:scale-105 transition-transform duration-300">
                 <div className="text-4xl font-bold neon-text">{stat.value}</div>
@@ -179,128 +270,170 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Case Studies */}
+      {/* Projects Grid */}
       <section className="py-20 px-6">
-        <div className="container mx-auto space-y-32">
-          {filteredCases.map((study, index) => (
-            <div
-              key={study.id}
-              className={`grid md:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "md:flex-row-reverse" : ""
-                }`}
-            >
-              {/* Project Image/Visual */}
-              <div className={`${index % 2 === 1 ? "md:order-2" : ""}`}>
-                <Card className="glass-card overflow-hidden group cursor-pointer border-primary/20">
-                  <div className="relative h-80 overflow-hidden">
-                    <img
-                      src={study.image}
-                      alt={study.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
-                      <div className="text-white">
-                        <p className="font-bold text-lg">View Case Study</p>
-                        <ArrowRight className="w-5 h-5 ml-2 inline-block" />
-                      </div>
-                    </div>
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project, index) => (
+              <Card 
+                key={project.id} 
+                className="glass-card overflow-hidden group border-primary/20 hover:border-primary/50 transition-all duration-500 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Project Image */}
+                <div className="relative h-56 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-glow-dark via-glow-dark/50 to-transparent opacity-60" />
+                  
+                  {/* Overlay on Hover */}
+                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <a 
+                      href={project.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="glass-button bg-primary text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2 transform scale-90 group-hover:scale-100 transition-transform duration-300"
+                    >
+                      <Globe className="w-4 h-4" />
+                      Visit Live Site
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
                   </div>
-                  <div className="p-6 border-t border-white/10">
-                    <Badge className="bg-primary/20 text-primary border-primary/30 mb-2">
-                      {study.category}
+
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-primary/90 text-primary-foreground border-0">
+                      {project.category}
                     </Badge>
-                    <h3 className="text-2xl font-bold text-foreground">{study.client}</h3>
                   </div>
-                </Card>
-              </div>
 
-              {/* Project Details */}
-              <div className={`space-y-6 ${index % 2 === 1 ? "md:order-1" : ""}`}>
-                <div>
-                  <h2 className="text-4xl font-bold mb-4 neon-text">{study.title}</h2>
-                  <p className="text-lg text-muted-foreground">{study.description}</p>
-                </div>
-
-                {/* Challenge & Solution */}
-                <div className="space-y-4">
-                  <Card className="glass-card p-6 hover:bg-white/5 transition-colors">
-                    <h4 className="text-sm font-semibold text-primary mb-2 flex items-center">
-                      <span className="w-2 h-2 bg-red-500 rounded-full mr-2" />
-                      THE CHALLENGE
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{study.challenge}</p>
-                  </Card>
-                  <Card className="glass-card p-6 hover:bg-white/5 transition-colors">
-                    <h4 className="text-sm font-semibold text-primary mb-2 flex items-center">
-                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                      OUR SOLUTION
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{study.solution}</p>
-                  </Card>
-                </div>
-
-                {/* Metrics Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  {study.metrics.map((metric, idx) => (
-                    <Card key={idx} className="glass-card p-4 hover:border-primary/50 transition-colors">
-                      <div className="text-xs text-muted-foreground mb-2">{metric.label}</div>
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <span className="text-sm text-muted-foreground line-through">{metric.before}</span>
-                        <ArrowRight className="w-3 h-3 text-primary" />
-                        <span className="text-lg font-bold text-primary">{metric.after}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-green-400">
-                        <TrendingUp className="w-3 h-3" />
-                        <span>{metric.growth}</span>
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-
-                {/* Tech Stack */}
-                <div>
-                  <h4 className="text-sm font-semibold text-primary mb-3">TECH STACK</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {study.techStack.map((tech, idx) => (
-                      <Badge key={idx} className="glass-card border-primary/20 text-foreground hover:bg-primary/20 transition-colors">
-                        {tech}
-                      </Badge>
-                    ))}
+                  {/* Project Type Badge */}
+                  <div className="absolute top-4 right-4">
+                    <Badge className="glass-card border-white/20 text-foreground text-xs">
+                      {project.type}
+                    </Badge>
                   </div>
                 </div>
 
                 {/* Project Info */}
-                <div className="flex gap-6 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-primary" />
-                    <span>{study.duration}</span>
+                <div className="p-6 space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-sm text-primary/80 mt-1 flex items-center gap-1">
+                      <Layers className="w-3 h-3" />
+                      {project.industry}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="w-4 h-4 text-primary" />
-                    <span>{study.team}</span>
-                  </div>
-                </div>
 
-                {/* Testimonial */}
-                <Card className="glass-card p-6 border-primary/20 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 p-4 opacity-10">
-                    <Quote className="w-16 h-16 text-primary" />
-                  </div>
-                  <p className="text-sm text-muted-foreground italic mb-4 relative z-10">
-                    "{study.testimonial.text}"
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {project.description}
                   </p>
-                  <div className="flex items-center gap-3 relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Star className="w-5 h-5 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-foreground">{study.testimonial.author}</div>
-                      <div className="text-xs text-muted-foreground">{study.testimonial.position}</div>
+
+                  {/* Features */}
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Key Features</h4>
+                    <ul className="grid grid-cols-2 gap-1">
+                      {project.features.slice(0, 4).map((feature, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
+                          <span className="w-1 h-1 bg-primary rounded-full mt-1.5 flex-shrink-0" />
+                          <span className="line-clamp-1">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div className="space-y-2">
+                    <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Tech Stack</h4>
+                    <div className="flex flex-wrap gap-1">
+                      {project.techStack.slice(0, 4).map((tech, idx) => (
+                        <Badge 
+                          key={idx} 
+                          variant="outline" 
+                          className="text-xs bg-primary/5 border-primary/20 text-muted-foreground hover:bg-primary/10"
+                        >
+                          {tech}
+                        </Badge>
+                      ))}
+                      {project.techStack.length > 4 && (
+                        <Badge 
+                          variant="outline" 
+                          className="text-xs bg-primary/5 border-primary/20 text-muted-foreground"
+                        >
+                          +{project.techStack.length - 4}
+                        </Badge>
+                      )}
                     </div>
                   </div>
-                </Card>
+
+                  {/* View Project Link */}
+                  <a 
+                    href={project.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors pt-2 group/link"
+                  >
+                    <span>View Live Project</span>
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Highlight */}
+      <section className="py-16 px-6">
+        <div className="container mx-auto">
+          <Card className="glass-card p-8 md:p-12 border-primary/20">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="space-y-4">
+                <Badge className="bg-primary/20 text-primary border-primary/30">
+                  Our Expertise
+                </Badge>
+                <h2 className="text-3xl md:text-4xl font-bold neon-text">
+                  Full-Stack Web Development
+                </h2>
+                <p className="text-muted-foreground">
+                  From stunning e-commerce platforms to comprehensive business solutions, we deliver projects that exceed expectations. Our team specializes in:
+                </p>
+                <ul className="space-y-2">
+                  {[
+                    "Custom E-Commerce Solutions",
+                    "Business & Corporate Websites",
+                    "Non-Profit & Educational Platforms",
+                    "Real Estate & Property Portals",
+                    "Service Booking Systems",
+                    "Community & Event Platforms"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="w-2 h-2 bg-primary rounded-full" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { value: "11+", label: "Wix Projects" },
+                  { value: "6", label: "Industries" },
+                  { value: "100%", label: "Client Approval" },
+                  { value: "48hr", label: "Avg. Response" }
+                ].map((stat, index) => (
+                  <Card key={index} className="glass-card p-4 text-center hover:border-primary/50 transition-colors">
+                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
+                  </Card>
+                ))}
               </div>
             </div>
-          ))}
+          </Card>
         </div>
       </section>
 
@@ -311,16 +444,23 @@ const Portfolio = () => {
             <div className="absolute inset-0 bg-primary/5 blur-3xl" />
             <div className="relative z-10">
               <h2 className="text-4xl font-bold mb-4 neon-text">
-                Ready to Write Your Success Story?
+                Ready to Start Your Project?
               </h2>
               <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Let's discuss how we can transform your business with innovative technology solutions.
+                Let's discuss how we can bring your vision to life with a stunning, professional website.
               </p>
-              <Link to="/#contact">
-                <Button size="lg" className="glass-button bg-primary text-primary-foreground hover:bg-primary/90 px-8 group">
-                  Start Your Project <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/quote">
+                  <Button size="lg" className="glass-button bg-primary text-primary-foreground hover:bg-primary/90 px-8 group">
+                    Get a Free Quote <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button size="lg" variant="outline" className="glass-card border-primary/30 hover:bg-primary/10 px-8">
+                    Contact Us
+                  </Button>
+                </Link>
+              </div>
             </div>
           </Card>
         </div>
