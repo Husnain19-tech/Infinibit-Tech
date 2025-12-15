@@ -6,11 +6,13 @@ import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter, ExternalLink, Globe, Layers } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter, ExternalLink, Globe, Layers, Search, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const categories = ["All", "E-Commerce", "Healthcare", "Real Estate", "Non-Profit", "Business", "Lifestyle"];
 
@@ -204,9 +206,17 @@ const Portfolio = () => {
     }
   ];
 
-  const filteredProjects = activeCategory === "All"
-    ? wixProjects
-    : wixProjects.filter(project => project.category === activeCategory);
+  // Filter by category and search query
+  const filteredProjects = wixProjects.filter(project => {
+    const matchesCategory = activeCategory === "All" || project.category === activeCategory;
+    const searchLower = searchQuery.toLowerCase();
+    const matchesSearch = searchQuery === "" || 
+      project.title.toLowerCase().includes(searchLower) ||
+      project.description.toLowerCase().includes(searchLower) ||
+      project.industry.toLowerCase().includes(searchLower) ||
+      project.techStack.some(tech => tech.toLowerCase().includes(searchLower));
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen">
@@ -250,9 +260,37 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Search & Category Filter */}
       <section className="py-8 px-6">
-        <div className="container mx-auto">
+        <div className="container mx-auto space-y-6">
+          {/* Search Bar */}
+          <div className="max-w-xl mx-auto">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search by project name, technology, or industry..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-12 py-6 glass-card border-primary/20 focus:border-primary/50 text-foreground placeholder:text-muted-foreground"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+            {searchQuery && (
+              <p className="text-sm text-muted-foreground mt-2 text-center">
+                Found {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''} matching "{searchQuery}"
+              </p>
+            )}
+          </div>
+
+          {/* Category Filters */}
           <div className="flex flex-wrap justify-center gap-4">
             {categories.map((category) => (
               <button
