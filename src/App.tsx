@@ -30,6 +30,8 @@ import QualityAssurance from "./pages/services/QualityAssurance";
 import Careers from "./pages/Careers";
 import Team from "./pages/Team";
 import ContactPage from "./pages/ContactPage";
+import Auth from "./pages/Auth";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -66,6 +68,8 @@ const App = () => (
                 <Route path="/careers" element={<Careers />} />
                 <Route path="/team" element={<Team />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/admin" element={<Admin />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
