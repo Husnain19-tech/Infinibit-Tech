@@ -15,6 +15,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const services = [
   { id: "ai-automation", name: "AI Automation Solutions", basePrice: 15000 },
@@ -141,11 +142,36 @@ export default function Quote() {
     setStep(step + 1);
   };
 
-  const handleSubmit = () => {
-    toast({
-      title: "Quote Request Submitted!",
-      description: "Our team will contact you within 24 hours.",
-    });
+  const handleSubmit = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          type: "quote",
+          name: formData.name,
+          email: formData.email,
+          company: formData.company || undefined,
+          description: formData.description,
+          services: formData.services,
+          timeline: formData.timeline,
+          budget: formData.budget,
+          estimatedCost: calculateEstimate(),
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Quote Request Submitted!",
+        description: "Our team will contact you within 24 hours.",
+      });
+    } catch (error) {
+      console.error("Quote submission error:", error);
+      toast({
+        title: "Submission Failed",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (

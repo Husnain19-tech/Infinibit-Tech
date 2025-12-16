@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string()
@@ -49,19 +50,37 @@ const ChatWidget = () => {
       email: "",
       message: "",
     },
-    mode: "onChange", // Enable real-time validation
+    mode: "onChange",
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    // Handle form submission with validated data
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
-    
-    // Reset form and close dialog
-    form.reset();
-    setIsOpen(false);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const { data, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          type: "chat",
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
+      form.reset();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Chat submission error:", error);
+      toast({
+        title: "Failed to send message",
+        description: "Please try again or contact us directly.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
