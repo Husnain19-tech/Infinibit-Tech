@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, Send, Linkedin, Briefcase } from "lucide-react";
-import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import {
   Form,
   FormControl,
@@ -57,35 +57,23 @@ const Contact = () => {
   const handleSubmit = async (values: ContactFormValues) => {
     setIsSubmitting(true);
 
-    // EmailJS credentials from environment variables
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
-
-    // Check if credentials are configured
-    if (!serviceId || !templateId || !publicKey) {
-      toast.error("Email service is not configured. Please contact us directly.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    const templateParams = {
-      from_name: values.name,
-      from_email: values.email,
-      company: values.company || "Not provided",
-      message: values.message,
-      to_email: "infinibitech@gmail.com",
-    };
-
     try {
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      toast.success("Message sent successfully!");
+      const { data, error } = await supabase.functions.invoke("submit-form", {
+        body: {
+          type: "contact",
+          name: values.name,
+          email: values.email,
+          company: values.company || undefined,
+          message: values.message,
+        },
+      });
+
+      if (error) throw error;
+      
+      toast.success("Message sent successfully! We'll get back to you soon.");
       form.reset();
     } catch (error) {
-      // Log errors only in development
-      if (import.meta.env.DEV) {
-        console.error("EmailJS Error:", error);
-      }
+      console.error("Contact form error:", error);
       toast.error("Failed to send message. Please try again or email directly.");
     } finally {
       setIsSubmitting(false);
