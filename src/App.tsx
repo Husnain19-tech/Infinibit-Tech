@@ -31,7 +31,15 @@ import Careers from "./pages/Careers";
 import Team from "./pages/Team";
 import ContactPage from "./pages/ContactPage";
 import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
+
+// Admin imports
+import AdminLayout from "./components/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Contacts from "./pages/admin/Contacts";
+import Quotes from "./pages/admin/Quotes";
+import Chats from "./pages/admin/Chats";
+import UserManagement from "./pages/admin/UserManagement";
+import AuditLogs from "./pages/admin/AuditLogs";
 
 const queryClient = new QueryClient();
 
@@ -69,7 +77,17 @@ const App = () => (
                 <Route path="/team" element={<Team />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/auth" element={<Auth />} />
-                <Route path="/admin" element={<Admin />} />
+                
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="contacts" element={<Contacts />} />
+                  <Route path="quotes" element={<Quotes />} />
+                  <Route path="chats" element={<Chats />} />
+                  <Route path="users" element={<UserManagement />} />
+                  <Route path="audit" element={<AuditLogs />} />
+                </Route>
+
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
