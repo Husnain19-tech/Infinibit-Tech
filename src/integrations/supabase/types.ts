@@ -182,6 +182,57 @@ export type Database = {
         }
         Relationships: []
       }
+      services: {
+        Row: {
+          benefits: Json | null
+          created_at: string
+          description: string
+          display_order: number | null
+          gallery_images: string[] | null
+          icon: string
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          short_description: string
+          slug: string
+          tech_stack: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          benefits?: Json | null
+          created_at?: string
+          description: string
+          display_order?: number | null
+          gallery_images?: string[] | null
+          icon?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          short_description: string
+          slug: string
+          tech_stack?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          benefits?: Json | null
+          created_at?: string
+          description?: string
+          display_order?: number | null
+          gallery_images?: string[] | null
+          icon?: string
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          short_description?: string
+          slug?: string
+          tech_stack?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           assigned_by: string | null
