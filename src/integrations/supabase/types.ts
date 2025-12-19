@@ -104,6 +104,60 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_projects: {
+        Row: {
+          category: string
+          created_at: string
+          description: string
+          display_order: number | null
+          external_url: string | null
+          features: string[] | null
+          id: string
+          image_url: string | null
+          industry: string | null
+          is_active: boolean | null
+          is_featured: boolean | null
+          project_type: string | null
+          tech_stack: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description: string
+          display_order?: number | null
+          external_url?: string | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          industry?: string | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          project_type?: string | null
+          tech_stack?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string
+          display_order?: number | null
+          external_url?: string | null
+          features?: string[] | null
+          id?: string
+          image_url?: string | null
+          industry?: string | null
+          is_active?: boolean | null
+          is_featured?: boolean | null
+          project_type?: string | null
+          tech_stack?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
