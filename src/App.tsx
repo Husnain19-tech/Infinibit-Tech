@@ -40,6 +40,7 @@ import Quotes from "./pages/admin/Quotes";
 import Chats from "./pages/admin/Chats";
 import UserManagement from "./pages/admin/UserManagement";
 import AuditLogs from "./pages/admin/AuditLogs";
+import AdminServices from "./pages/admin/Services";
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ const App = () => (
                   <Route path="contacts" element={<Contacts />} />
                   <Route path="quotes" element={<Quotes />} />
                   <Route path="chats" element={<Chats />} />
+                  <Route path="services" element={<AdminServices />} />
                   <Route path="users" element={<UserManagement />} />
                   <Route path="audit" element={<AuditLogs />} />
                 </Route>
