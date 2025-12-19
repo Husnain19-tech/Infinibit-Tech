@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Json } from "@/integrations/supabase/types";
 
 export interface ServiceBenefit {
   title: string;
@@ -43,6 +44,39 @@ export interface ServiceFormData {
   display_order?: number;
 }
 
+// Helper to convert database row to Service type
+const mapDbToService = (row: any): Service => ({
+  id: row.id,
+  slug: row.slug,
+  title: row.title,
+  short_description: row.short_description,
+  description: row.description,
+  icon: row.icon,
+  image_url: row.image_url,
+  gallery_images: row.gallery_images || [],
+  benefits: (row.benefits as ServiceBenefit[]) || [],
+  tech_stack: (row.tech_stack as Record<string, string[]>) || {},
+  is_active: row.is_active,
+  display_order: row.display_order,
+  created_at: row.created_at,
+  updated_at: row.updated_at,
+});
+
+// Helper to convert ServiceFormData to database insert format
+const mapServiceToDb = (data: ServiceFormData) => ({
+  slug: data.slug,
+  title: data.title,
+  short_description: data.short_description,
+  description: data.description,
+  icon: data.icon,
+  image_url: data.image_url,
+  gallery_images: data.gallery_images,
+  benefits: data.benefits as unknown as Json,
+  tech_stack: data.tech_stack as unknown as Json,
+  is_active: data.is_active,
+  display_order: data.display_order,
+});
+
 export function useServices() {
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -56,7 +90,7 @@ export function useServices() {
         .order("display_order", { ascending: true });
 
       if (error) throw error;
-      return data as Service[];
+      return (data || []).map(mapDbToService);
     },
   });
 
@@ -64,12 +98,12 @@ export function useServices() {
     mutationFn: async (serviceData: ServiceFormData) => {
       const { data, error } = await supabase
         .from("services")
-        .insert([serviceData])
+        .insert([mapServiceToDb(serviceData)])
         .select()
         .single();
 
       if (error) throw error;
-      return data;
+      return mapDbToService(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["services"] });
@@ -84,13 +118,13 @@ export function useServices() {
     mutationFn: async ({ id, ...serviceData }: ServiceFormData & { id: string }) => {
       const { data, error } = await supabase
         .from("services")
-        .update(serviceData)
+        .update(mapServiceToDb(serviceData))
         .eq("id", id)
         .select()
         .single();
 
       if (error) throw error;
-      return data;
+      return mapDbToService(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["services"] });
@@ -177,7 +211,7 @@ export function usePublicServices() {
         .order("display_order", { ascending: true });
 
       if (error) throw error;
-      return data as Service[];
+      return (data || []).map(mapDbToService);
     },
   });
 
