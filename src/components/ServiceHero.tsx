@@ -1,6 +1,9 @@
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import { Button } from "./ui/button";
+import { ArrowRight } from "lucide-react";
+import { GlowingOrb, ParticleBackground } from "@/components/animations";
+import { fadeInUp, staggerContainer, heroTextReveal } from "@/lib/animations";
 
 interface ServiceHeroProps {
     title: string;
@@ -11,6 +14,10 @@ interface ServiceHeroProps {
     ctaLink?: string;
 }
 
+/**
+ * ServiceHero - Immersive hero section for service pages
+ * Replaced carousel with 3D animated background
+ */
 const ServiceHero = ({
     title,
     description,
@@ -19,140 +26,158 @@ const ServiceHero = ({
     ctaText = "Get Started",
     ctaLink = "/#contact"
 }: ServiceHeroProps) => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-    const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
 
-    // Auto-advance carousel
-    useEffect(() => {
-        if (!isAutoPlaying || images.length <= 1) return;
-
-        const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % images.length);
-        }, 5000); // Change slide every 5 seconds
-
-        return () => clearInterval(interval);
-    }, [isAutoPlaying, images.length]);
-
-    const goToSlide = (index: number) => {
-        setCurrentSlide(index);
-        setIsAutoPlaying(false);
-    };
-
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % images.length);
-        setIsAutoPlaying(false);
-    };
-
-    const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
-        setIsAutoPlaying(false);
-    };
+    // Split title for styling - last word gets neon effect
+    const titleWords = title.split(' ');
+    const lastWord = titleWords.pop();
+    const titleStart = titleWords.join(' ');
 
     return (
-        <section className="relative pt-32 pb-20 overflow-hidden">
-            {/* Background elements */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-dark-surface/50 to-background" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" />
+        <section ref={ref} className="relative pt-32 pb-24 overflow-hidden min-h-[70vh] flex items-center">
+            {/* Dynamic Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,10%)] to-background" />
+
+            {/* Background Image with Parallax */}
+            {images[0] && (
+                <motion.div
+                    className="absolute inset-0 z-0"
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                >
+                    <img
+                        src={images[0]}
+                        alt={title}
+                        className="w-full h-full object-cover opacity-15"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+                </motion.div>
+            )}
+
+            {/* Particle Effect */}
+            <ParticleBackground
+                particleCount={30}
+                interactive={true}
+                color="hsl(187, 100%, 50%)"
+                minSize={1}
+                maxSize={4}
+            />
+
+            {/* Glowing Orbs */}
+            <GlowingOrb x="80%" y="20%" size={500} intensity={0.12} />
+            <GlowingOrb x="10%" y="70%" size={400} color="hsl(193, 100%, 39%)" intensity={0.08} />
+
+            {/* Center Glow */}
+            <motion.div
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
+                style={{
+                    background: "radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%)",
+                }}
+                animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0.8, 0.5],
+                }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
 
             <div className="container relative z-10 mx-auto px-6">
-                {/* Carousel Section */}
-                {images.length > 0 && (
-                    <div className="max-w-5xl mx-auto mb-12">
-                        <div className="relative aspect-video rounded-3xl overflow-hidden glass-card group">
-                            {/* Images */}
-                            {images.map((image, index) => (
-                                <div
-                                    key={index}
-                                    className={`absolute inset-0 transition-opacity duration-700 ${index === currentSlide ? "opacity-100" : "opacity-0"
-                                        }`}
-                                >
-                                    <img
-                                        src={image}
-                                        alt={`${title} - Slide ${index + 1}`}
-                                        className="w-full h-full object-cover"
-                                        loading={index === 0 ? "eager" : "lazy"}
-                                    />
-                                    {/* Gradient overlay for better text readability */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                                </div>
-                            ))}
+                <motion.div
+                    className="max-w-4xl mx-auto text-center space-y-8"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                >
+                    {/* Service Badge */}
+                    <motion.div
+                        className="inline-flex items-center space-x-2 glass-card px-5 py-2.5"
+                        variants={fadeInUp}
+                    >
+                        <motion.div
+                            className="text-primary"
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                        >
+                            {icon}
+                        </motion.div>
+                        <span className="text-sm text-primary font-medium tracking-wider uppercase">
+                            Professional Services
+                        </span>
+                    </motion.div>
 
-                            {/* Navigation Arrows - Only show if more than 1 image */}
-                            {images.length > 1 && (
-                                <>
-                                    <button
-                                        onClick={prevSlide}
-                                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all opacity-0 group-hover:opacity-100"
-                                        aria-label="Previous slide"
-                                    >
-                                        <ChevronLeft className="w-6 h-6" />
-                                    </button>
-                                    <button
-                                        onClick={nextSlide}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground hover:bg-primary hover:text-white transition-all opacity-0 group-hover:opacity-100"
-                                        aria-label="Next slide"
-                                    >
-                                        <ChevronRight className="w-6 h-6" />
-                                    </button>
+                    {/* Title with Animation */}
+                    <motion.h1
+                        className="text-5xl md:text-7xl font-bold leading-tight"
+                        variants={heroTextReveal}
+                    >
+                        {titleStart}{' '}
+                        <motion.span
+                            className="neon-text inline-block"
+                            animate={{
+                                textShadow: [
+                                    "0 0 20px rgba(0, 229, 255, 0.5)",
+                                    "0 0 40px rgba(0, 229, 255, 0.8)",
+                                    "0 0 20px rgba(0, 229, 255, 0.5)",
+                                ],
+                            }}
+                            transition={{ duration: 3, repeat: Infinity }}
+                        >
+                            {lastWord}
+                        </motion.span>
+                    </motion.h1>
 
-                                    {/* Dots Indicator */}
-                                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                                        {images.map((_, index) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => goToSlide(index)}
-                                                className={`h-2 rounded-full transition-all ${index === currentSlide
-                                                        ? "w-8 bg-primary"
-                                                        : "w-2 bg-white/50 hover:bg-white/80"
-                                                    }`}
-                                                aria-label={`Go to slide ${index + 1}`}
-                                            />
-                                        ))}
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Hero Content */}
-                <div className="max-w-4xl mx-auto text-center space-y-6">
-                    <div className="inline-flex items-center space-x-2 glass-card px-4 py-2 mb-4">
-                        <div className="text-primary">{icon}</div>
-                        <span className="text-sm text-primary font-medium">Professional Services</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                        {title.split(' ').slice(0, -1).join(' ')}{' '}
-                        <span className="neon-text">{title.split(' ').slice(-1)}</span>
-                    </h1>
-
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                    {/* Description */}
+                    <motion.p
+                        className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+                        variants={fadeInUp}
+                    >
                         {description}
-                    </p>
+                    </motion.p>
 
-                    <div className="flex gap-4 justify-center pt-4">
+                    {/* CTA Button */}
+                    <motion.div
+                        className="flex gap-4 justify-center pt-4"
+                        variants={fadeInUp}
+                    >
                         <a href={ctaLink}>
-                            <Button size="lg" className="glass-button group">
-                                {ctaText}
-                                <svg
-                                    className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
+                            <motion.div
+                                whileHover={{
+                                    scale: 1.05,
+                                    boxShadow: "0 0 30px rgba(0, 229, 255, 0.5)"
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <Button
+                                    size="lg"
+                                    className="glass-button group text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M9 5l7 7-7 7"
-                                    />
-                                </svg>
-                            </Button>
+                                    {ctaText}
+                                    <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                            </motion.div>
                         </a>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             </div>
+
+            {/* Scroll Indicator */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <div className="w-6 h-10 rounded-full border-2 border-primary/50 flex items-start justify-center p-2">
+                    <motion.div
+                        className="w-1.5 h-1.5 bg-primary rounded-full"
+                        animate={{ y: [0, 12, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                </div>
+            </motion.div>
+
+            {/* Bottom Gradient */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
         </section>
     );
 };

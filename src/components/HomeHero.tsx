@@ -1,129 +1,221 @@
-import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+    ParticleBackground,
+    CyberGrid,
+    FloatingElement,
+    GlowingOrb,
+} from "@/components/animations";
+import {
+    fadeInUp,
+    staggerContainer,
+    heroTextReveal,
+    heroCTA,
+    scaleIn,
+} from "@/lib/animations";
 
-const heroSlides = [
-    {
-        image: "/images/services/saas-1.jpg",
-        title: "Technology Reimagined",
-        subtitle: "We build intelligent, enterprise-grade digital solutions that automate operations, accelerate growth, and transform customer experiences.",
-        cta: "Start Your Project",
-        link: "/#contact"
-    },
-    {
-        image: "/images/services/corporate-solutions-1.jpg",
-        title: "Future-Ready Solutions",
-        subtitle: "Empowering businesses with cutting-edge AI, cloud, and software infrastructure designed for the modern era.",
-        cta: "Explore Services",
-        link: "/services"
-    },
-    {
-        image: "/images/services/business-consultancy-1.jpg",
-        title: "Strategic Innovation",
-        subtitle: "Partner with us to navigate your digital transformation journey with expert consultancy and technical excellence.",
-        cta: "View Portfolio",
-        link: "/portfolio"
-    }
+// Floating tech icons data
+const floatingIcons = [
+    { Icon: Sparkles, x: "10%", y: "20%", delay: 0 },
+    { Icon: Zap, x: "85%", y: "25%", delay: 0.5 },
+    { Icon: Shield, x: "15%", y: "70%", delay: 1 },
+    { Icon: Globe, x: "80%", y: "65%", delay: 1.5 },
 ];
 
 const HomeHero = () => {
-    const [currentSlide, setCurrentSlide] = useState(0);
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-        }, 5000);
-        return () => clearInterval(timer);
-    }, []);
-
-    const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-
     return (
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
-            {/* Carousel Backgrounds */}
-            {heroSlides.map((slide, index) => (
-                <div
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+            {/* Dynamic Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,10%)] to-background" />
+
+            {/* Particle System - Optimized for performance */}
+            <ParticleBackground
+                particleCount={30}
+                interactive={false}
+                color="hsl(187, 100%, 50%)"
+            />
+
+            {/* Glowing Orbs */}
+            <GlowingOrb x="20%" y="30%" size={600} intensity={0.15} />
+            <GlowingOrb x="80%" y="20%" size={400} color="hsl(193, 100%, 39%)" intensity={0.1} />
+            <GlowingOrb x="60%" y="80%" size={500} intensity={0.12} />
+
+            {/* Floating Tech Icons */}
+            {floatingIcons.map(({ Icon, x, y, delay }, index) => (
+                <motion.div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? "opacity-100" : "opacity-0"
-                        }`}
+                    className="absolute z-10 hidden md:block"
+                    style={{ left: x, top: y }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                        opacity: 0.6,
+                        scale: 1,
+                        y: [0, -20, 0],
+                    }}
+                    transition={{
+                        opacity: { delay, duration: 0.5 },
+                        scale: { delay, duration: 0.5 },
+                        y: { delay: delay + 0.5, duration: 4 + index, repeat: Infinity, ease: "easeInOut" },
+                    }}
                 >
-                    <div className="absolute inset-0 bg-black/60 z-10" /> {/* Overlay */}
-                    <img
-                        src={slide.image}
-                        alt={slide.title}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
+                    <div className="p-4 glass-card rounded-2xl">
+                        <Icon className="w-8 h-8 text-primary" />
+                    </div>
+                </motion.div>
             ))}
 
-            {/* Content */}
+            {/* Animated Cyber Grid */}
+            <CyberGrid animated={true} />
+
+            {/* Main Content */}
             <div className="container relative z-20 mx-auto px-6 text-center">
-                <div className="max-w-4xl mx-auto space-y-8">
-                    <div className="inline-flex items-center space-x-2 glass-card px-4 py-2 mb-4 animate-fade-in">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                        <span className="text-sm text-primary font-medium tracking-wider uppercase">AI-Powered Innovation Studio</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
-                        {heroSlides[currentSlide].title.split(" ").map((word, i) => (
-                            <span key={i} className={i === 1 ? "neon-text block" : "block"}>
-                                {word}{" "}
-                            </span>
-                        ))}
-                    </h1>
-
-                    <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
-                        {heroSlides[currentSlide].subtitle}
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-                        <Link to={heroSlides[currentSlide].link}>
-                            <Button size="lg" className="glass-button group text-lg px-8 py-6">
-                                {heroSlides[currentSlide].cta}
-                                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                            </Button>
-                        </Link>
-                        <Link to="/services">
-                            <Button size="lg" variant="outline" className="glass-button text-lg px-8 py-6 bg-transparent hover:bg-white/10">
-                                Our Services
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
-            {/* Navigation Controls */}
-            <div className="absolute bottom-10 left-0 right-0 z-20 flex justify-center gap-4">
-                <button
-                    onClick={prevSlide}
-                    className="p-2 rounded-full glass-card hover:bg-primary/20 transition-colors"
-                    aria-label="Previous slide"
+                <motion.div
+                    className="max-w-5xl mx-auto space-y-8"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="visible"
                 >
-                    <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-                <div className="flex gap-2 items-center">
-                    {heroSlides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentSlide(index)}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-primary w-8" : "bg-white/50 hover:bg-white"
-                                }`}
-                            aria-label={`Go to slide ${index + 1}`}
+                    {/* Badge */}
+                    <motion.div
+                        variants={scaleIn}
+                        className="inline-flex items-center space-x-2 glass-card px-6 py-3"
+                    >
+                        <motion.div
+                            className="w-2 h-2 bg-primary rounded-full"
+                            animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                            transition={{ duration: 2, repeat: Infinity }}
                         />
-                    ))}
-                </div>
-                <button
-                    onClick={nextSlide}
-                    className="p-2 rounded-full glass-card hover:bg-primary/20 transition-colors"
-                    aria-label="Next slide"
-                >
-                    <ChevronRight className="w-6 h-6 text-white" />
-                </button>
+                        <span className="text-sm text-primary font-medium tracking-wider uppercase">
+                            AI-Powered Innovation Studio
+                        </span>
+                    </motion.div>
+
+                    {/* Main Headline */}
+                    <FloatingElement
+                        floatIntensity={10}
+                        rotateIntensity={5}
+                        enableMouseFollow={true}
+                    >
+                        <motion.h1
+                            className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
+                            variants={heroTextReveal}
+                        >
+                            <span className="block text-heading-text">Technology</span>
+                            <motion.span
+                                className="block neon-text"
+                                animate={{
+                                    textShadow: [
+                                        "0 0 20px rgba(0, 229, 255, 0.5)",
+                                        "0 0 40px rgba(0, 229, 255, 0.8)",
+                                        "0 0 20px rgba(0, 229, 255, 0.5)",
+                                    ],
+                                }}
+                                transition={{ duration: 3, repeat: Infinity }}
+                            >
+                                Reimagined
+                            </motion.span>
+                        </motion.h1>
+                    </FloatingElement>
+
+                    {/* Subtitle */}
+                    <motion.p
+                        className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+                        variants={fadeInUp}
+                    >
+                        We build intelligent, enterprise-grade digital solutions that{" "}
+                        <span className="text-primary font-medium">automate operations</span>,{" "}
+                        <span className="text-primary font-medium">accelerate growth</span>, and{" "}
+                        <span className="text-primary font-medium">transform experiences</span>.
+                    </motion.p>
+
+                    {/* CTA Buttons */}
+                    <motion.div
+                        className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
+                        variants={heroCTA}
+                    >
+                        <Link to="/quote">
+                            <motion.div
+                                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 229, 255, 0.5)" }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <Button
+                                    size="lg"
+                                    className="glass-button group text-lg px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90"
+                                >
+                                    Start Your Project
+                                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                </Button>
+                            </motion.div>
+                        </Link>
+                        <Link to="/portfolio">
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <Button
+                                    size="lg"
+                                    variant="outline"
+                                    className="glass-button text-lg px-8 py-6"
+                                >
+                                    View Our Work
+                                </Button>
+                            </motion.div>
+                        </Link>
+                    </motion.div>
+
+                    {/* Quick Stats */}
+                    <motion.div
+                        className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-16"
+                        variants={staggerContainer}
+                    >
+                        {[
+                            { value: "50+", label: "Projects Delivered" },
+                            { value: "30+", label: "Happy Clients" },
+                            { value: "16", label: "Tech Solutions" },
+                            { value: "100%", label: "Client Satisfaction" },
+                        ].map((stat, index) => (
+                            <motion.div
+                                key={index}
+                                className="glass-card p-6 group"
+                                variants={fadeInUp}
+                                whileHover={{
+                                    scale: 1.05,
+                                    borderColor: "hsl(187, 100%, 50%)",
+                                    boxShadow: "0 0 20px rgba(0, 229, 255, 0.3)",
+                                }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <motion.div
+                                    className="text-3xl md:text-4xl font-bold neon-text"
+                                    whileHover={{ scale: 1.1 }}
+                                >
+                                    {stat.value}
+                                </motion.div>
+                                <div className="text-sm text-muted-foreground mt-2">{stat.label}</div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </motion.div>
             </div>
 
-            {/* Bottom Fade */}
+            {/* Scroll Indicator */}
+            <motion.div
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+            >
+                <div className="w-6 h-10 rounded-full border-2 border-primary/50 flex items-start justify-center p-2">
+                    <motion.div
+                        className="w-1.5 h-1.5 bg-primary rounded-full"
+                        animate={{ y: [0, 12, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                    />
+                </div>
+            </motion.div>
+
+            {/* Bottom Gradient Fade */}
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-10" />
         </section>
     );

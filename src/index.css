@@ -1,9 +1,9 @@
+/* Import performance optimizations */
+@import './performance.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import performance optimizations */
-@import './performance.css';
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
@@ -256,5 +256,220 @@ All colors MUST be HSL.
       transform: translate(-15px, -10px) scale(1.05);
       opacity: 0.7;
     }
+  }
+
+  /* Infinite Marquee Animation */
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Fade In Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-fade-out {
+    animation: fadeOut 0.3s ease-in forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* 3D Card Tilt */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Text Gradient Animation */
+  .animate-gradient-text {
+    background: linear-gradient(90deg, hsl(var(--neon-cyan)), hsl(var(--secondary-cyan)), hsl(var(--neon-cyan)));
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s linear infinite;
+  }
+
+  @keyframes gradientShift {
+    to {
+      background-position: 200% center;
+    }
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* === PERFORMANCE-OPTIMIZED CREATIVE ANIMATIONS === */
+
+/* Particle Float - GPU accelerated */
+.particle-float {
+  animation: particleFloat 20s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes particleFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+
+  25% {
+    transform: translateY(-15px) translateX(5px);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translateY(-25px) translateX(-5px);
+    opacity: 0.7;
+  }
+
+  75% {
+    transform: translateY(-10px) translateX(8px);
+    opacity: 0.4;
+  }
+}
+
+/* Cyber Grid Flow Animation */
+.animate-grid-flow {
+  animation: gridFlow 20s linear infinite;
+}
+
+@keyframes gridFlow {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+/* Scanning Line Effect */
+.animate-scan-line {
+  animation: scanLine 4s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0% {
+    top: -2px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Glowing Border Animation */
+.animate-glow-border {
+  animation: glowBorder 3s ease-in-out infinite;
+}
+
+@keyframes glowBorder {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px hsl(var(--neon-cyan) / 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px hsl(var(--neon-cyan) / 0.6), 0 0 40px hsl(var(--neon-cyan) / 0.3);
+  }
+}
+
+/* Text Shimmer Effect */
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      hsl(var(--heading-text)) 0%,
+      hsl(var(--neon-cyan)) 50%,
+      hsl(var(--heading-text)) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Pulse Ring Effect */
+.animate-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid hsl(var(--neon-cyan) / 0.5);
+  animation: pulseRing 2s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
   }
 }

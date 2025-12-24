@@ -1,144 +1,208 @@
-import { Link, useLocation } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { 
-  LayoutDashboard, 
-  Mail, 
-  FileText, 
-  MessageCircle,
-  Users,
-  Briefcase,
-  FolderOpen,
-  Settings,
-  Shield,
-  History,
-  Wrench,
-  UserCircle,
-  LogOut,
-  Home,
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { AppRole } from "@/hooks/useAuth";
-import logo from "@/assets/logo.jpg";
+import {
+  Users,
+  Settings,
+  HelpCircle,
+  LogOut,
+  LayoutDashboard,
+  MessageSquare,
+  FileText,
+  UserPlus,
+  History,
+  Briefcase,
+  Layers,
+  Image,
+  Package // Added for Inventory
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 interface AdminSidebarProps {
-  roles: AppRole[];
+  roles: string[];
   onSignOut: () => void;
   profileName?: string;
 }
 
-interface NavItem {
-  label: string;
-  href: string;
-  icon: React.ElementType;
-  roles?: AppRole[];
-}
-
-const navItems: NavItem[] = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-  { label: "Contacts", href: "/admin/contacts", icon: Mail },
-  { label: "Quotes", href: "/admin/quotes", icon: FileText },
-  { label: "Chats", href: "/admin/chats", icon: MessageCircle },
-  { label: "Services", href: "/admin/services", icon: Wrench, roles: ["owner", "developer"] },
-  { label: "Portfolio", href: "/admin/portfolio", icon: FolderOpen, roles: ["owner", "developer"] },
-  { label: "Team", href: "/admin/team", icon: Users, roles: ["owner", "hr"] },
-  { label: "Careers", href: "/admin/careers", icon: Briefcase, roles: ["owner", "hr"] },
-  { label: "User Management", href: "/admin/users", icon: Shield, roles: ["owner"] },
-  { label: "Audit Logs", href: "/admin/audit", icon: History, roles: ["owner"] },
-  { label: "Settings", href: "/admin/settings", icon: Settings, roles: ["owner"] },
-];
-
-export default function AdminSidebar({ roles, onSignOut, profileName }: AdminSidebarProps) {
+const AdminSidebar = ({ roles, onSignOut, profileName }: AdminSidebarProps) => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
 
-  const hasAccess = (item: NavItem): boolean => {
-    if (!item.roles) return true;
-    return item.roles.some(role => roles.includes(role));
-  };
+  const isActive = (path: string) => location.pathname === path;
 
-  const isActive = (href: string): boolean => {
-    if (href === "/admin") {
-      return location.pathname === "/admin";
-    }
-    return location.pathname.startsWith(href);
-  };
+  // Define navigation items based on roles
+  const navItems = [
+    {
+      title: "Overview",
+      items: [
+        {
+          label: "Dashboard",
+          href: "/admin",
+          icon: LayoutDashboard,
+          show: true,
+        },
+        {
+          label: "Inventory", // NEW
+          href: "/admin/inventory",
+          icon: Package,
+          show: true,
+        },
+      ],
+    },
+    {
+      title: "Communications",
+      items: [
+        {
+          label: "Contacts",
+          href: "/admin/contacts",
+          icon: MessageSquare,
+          show: true,
+        },
+        {
+          label: "Quotes",
+          href: "/admin/quotes",
+          icon: FileText,
+          show: true,
+        },
+        {
+          label: "Live Chats",
+          href: "/admin/chats",
+          icon: MessageSquare,
+          show: true,
+        },
+      ],
+    },
+    {
+      title: "Management",
+      items: [
+        {
+          label: "Users",
+          href: "/admin/users",
+          icon: Users,
+          show: roles.includes("owner") || roles.includes("admin"),
+        },
+        {
+          label: "Careers",
+          href: "/admin/careers",
+          icon: Briefcase,
+          show: roles.includes("owner") || roles.includes("hr"),
+        },
+      ],
+    },
+    {
+      title: "Content",
+      items: [
+        {
+          label: "Services",
+          href: "/admin/services",
+          icon: Layers,
+          show: true,
+        },
+        {
+          label: "Portfolio",
+          href: "/admin/portfolio",
+          icon: Image,
+          show: true,
+        },
+      ],
+    },
+    {
+      title: "System",
+      items: [
+        {
+          label: "Audit Logs",
+          href: "/admin/audit-logs",
+          icon: History,
+          show: roles.includes("owner"),
+        },
+        {
+          label: "Settings",
+          href: "/admin/settings",
+          icon: Settings,
+          show: true,
+        },
+      ],
+    },
+  ];
 
   return (
-    <aside className={cn(
-      "h-screen sticky top-0 border-r border-border bg-card/50 backdrop-blur-sm transition-all duration-300",
-      collapsed ? "w-16" : "w-64"
-    )}>
-      <div className="flex flex-col h-full">
-        {/* Logo */}
-        <div className="p-4 border-b border-border flex items-center justify-between">
+    <div className={`border-r border-border bg-card/50 backdrop-blur-xl h-screen flex flex-col transition-all duration-300 ${collapsed ? "w-[80px]" : "w-[280px]"}`}>
+      {/* Header */}
+      <div className="h-16 flex items-center px-6 border-b border-border">
+        {!collapsed && (
+          <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary-foreground">
+            Infinibit Admin
+          </span>
+        )}
+        {collapsed && <span className="font-bold text-xl text-primary mx-auto">IA</span>}
+      </div>
+
+      {/* User Info */}
+      <div className="p-4 border-b border-border">
+        <div className={`flex items-center gap-3 ${collapsed ? "justify-center" : ""}`}>
+          <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+            {profileName?.[0] || "A"}
+          </div>
           {!collapsed && (
-            <div className="flex items-center gap-2">
-              <img src={logo} alt="Logo" className="w-8 h-8 rounded" />
-              <span className="font-bold text-sm">Admin Panel</span>
+            <div className="overflow-hidden">
+              <p className="font-medium text-sm truncate">{profileName || "Admin User"}</p>
+              <p className="text-xs text-muted-foreground truncate capitalize">
+                {roles[0] || "Staff"}
+              </p>
             </div>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setCollapsed(!collapsed)}
-            className="h-8 w-8"
-          >
-            {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-          </Button>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-2">
-          <ul className="space-y-1">
-            {navItems.filter(hasAccess).map((item) => (
-              <li key={item.href}>
-                <Link
-                  to={item.href}
-                  className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors",
-                    isActive(item.href)
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  )}
-                  title={collapsed ? item.label : undefined}
-                >
-                  <item.icon className="h-4 w-4 flex-shrink-0" />
-                  {!collapsed && <span>{item.label}</span>}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* User & Actions */}
-        <div className="p-2 border-t border-border space-y-1">
-          {!collapsed && profileName && (
-            <div className="px-3 py-2 text-xs text-muted-foreground truncate">
-              <UserCircle className="h-4 w-4 inline mr-2" />
-              {profileName}
-            </div>
-          )}
-          <Link
-            to="/"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
-            title={collapsed ? "Back to Site" : undefined}
-          >
-            <Home className="h-4 w-4 flex-shrink-0" />
-            {!collapsed && <span>Back to Site</span>}
-          </Link>
-          <button
-            onClick={onSignOut}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-destructive hover:bg-destructive/10 transition-colors"
-            title={collapsed ? "Sign Out" : undefined}
-          >
-            <LogOut className="h-4 w-4 flex-shrink-0" />
-            {!collapsed && <span>Sign Out</span>}
-          </button>
         </div>
       </div>
-    </aside>
+
+      {/* Navigation */}
+      <div className="flex-1 overflow-y-auto py-4 px-3 space-y-6">
+        {navItems.map((section, idx) => (
+          <div key={idx} className="space-y-2">
+            {!collapsed && (
+              <h3 className="px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                {section.title}
+              </h3>
+            )}
+            <div className="space-y-1">
+              {section.items.filter(item => item.show).map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${isActive(item.href)
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-secondary/50 hover:text-foreground"
+                    } ${collapsed ? "justify-center" : ""}`}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <item.icon className="h-4 w-4 shrink-0" />
+                  {!collapsed && <span>{item.label}</span>}
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer */}
+      <div className="p-4 border-t border-border space-y-2">
+        <Button
+          variant="outline"
+          className={`w-full justify-start ${collapsed ? "justify-center px-0" : ""}`}
+          onClick={() => setCollapsed(!collapsed)}
+        >
+          {collapsed ? <Settings className="h-4 w-4" /> : "Collapse Sidebar"}
+        </Button>
+        <Button
+          variant="ghost"
+          className={`w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10 ${collapsed ? "justify-center px-0" : ""}`}
+          onClick={onSignOut}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          {!collapsed && "Sign Out"}
+        </Button>
+      </div>
+    </div>
   );
-}
+};
+
+export default AdminSidebar;
