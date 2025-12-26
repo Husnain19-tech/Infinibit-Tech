@@ -30,7 +30,7 @@ import {
 import { toast } from "sonner";
 import { RefreshCw, Shield, UserPlus, Trash2, Edit } from "lucide-react";
 import { format } from "date-fns";
-import { useAuth, AppRole } from "@/hooks/useAuth";
+import { useAuth, UserRole } from "@/hooks/useAuth";
 
 interface UserWithRole {
   id: string;
@@ -40,7 +40,7 @@ interface UserWithRole {
   department: string | null;
   position: string | null;
   created_at: string;
-  roles: AppRole[];
+  roles: UserRole[];
 }
 
 export default function UserManagement() {
@@ -50,8 +50,8 @@ export default function UserManagement() {
   const [showInviteDialog, setShowInviteDialog] = useState(false);
   const [showRoleDialog, setShowRoleDialog] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserWithRole | null>(null);
-  const [inviteData, setInviteData] = useState({ email: "", password: "", fullName: "", role: "employee" as AppRole });
-  const [newRole, setNewRole] = useState<AppRole>("employee");
+  const [inviteData, setInviteData] = useState({ email: "", password: "", fullName: "", role: "employee" as UserRole });
+  const [newRole, setNewRole] = useState<UserRole>("employee");
 
   useEffect(() => {
     fetchUsers();
@@ -77,7 +77,7 @@ export default function UserManagement() {
         ...profile,
         roles: (roles || [])
           .filter(r => r.user_id === profile.user_id)
-          .map(r => r.role as AppRole)
+          .map(r => r.role as UserRole)
       }));
 
       setUsers(usersWithRoles);
@@ -178,7 +178,7 @@ export default function UserManagement() {
     }
   };
 
-  const getRoleBadgeColor = (role: AppRole) => {
+  const getRoleBadgeColor = (role: UserRole) => {
     switch (role) {
       case "owner": return "bg-amber-500";
       case "developer": return "bg-blue-500";
@@ -319,7 +319,7 @@ export default function UserManagement() {
             </div>
             <div>
               <Label>Role</Label>
-              <Select value={inviteData.role} onValueChange={(v) => setInviteData({ ...inviteData, role: v as AppRole })}>
+              <Select value={inviteData.role} onValueChange={(v) => setInviteData({ ...inviteData, role: v as UserRole })}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -348,7 +348,7 @@ export default function UserManagement() {
           <div className="space-y-4">
             <div>
               <Label>Role</Label>
-              <Select value={newRole} onValueChange={(v) => setNewRole(v as AppRole)}>
+              <Select value={newRole} onValueChange={(v) => setNewRole(v as UserRole)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

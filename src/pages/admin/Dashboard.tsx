@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Mail, 
-  MessageCircle, 
-  FileText, 
+import {
+  Mail,
+  MessageCircle,
+  FileText,
   RefreshCw,
   Users,
   Briefcase,
@@ -14,7 +14,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 
 export default function Dashboard() {
-  const { profile, roles } = useAuth();
+  const { profile, isAdmin, isOwner, isDeveloper, isHR } = useAuth();
   const [stats, setStats] = useState({
     contacts: 0,
     quotes: 0,
@@ -51,9 +51,9 @@ export default function Dashboard() {
   };
 
   const getRoleBadge = () => {
-    if (roles.includes("owner")) return { label: "Owner", color: "bg-amber-500" };
-    if (roles.includes("developer")) return { label: "Developer", color: "bg-blue-500" };
-    if (roles.includes("hr")) return { label: "HR", color: "bg-green-500" };
+    if (isOwner) return { label: "Owner", color: "bg-amber-500" };
+    if (isDeveloper) return { label: "Developer", color: "bg-blue-500" };
+    if (isHR) return { label: "HR", color: "bg-green-500" };
     return { label: "Employee", color: "bg-gray-500" };
   };
 
@@ -157,7 +157,7 @@ export default function Dashboard() {
                 <span>View Quotes</span>
               </a>
             </Button>
-            {roles.includes("owner") || roles.includes("hr") ? (
+            {isOwner || isHR ? (
               <Button variant="outline" className="h-20 flex-col gap-2" asChild>
                 <a href="/admin/team">
                   <Users className="h-6 w-6" />
@@ -165,7 +165,7 @@ export default function Dashboard() {
                 </a>
               </Button>
             ) : null}
-            {roles.includes("owner") || roles.includes("hr") ? (
+            {isOwner || isHR ? (
               <Button variant="outline" className="h-20 flex-col gap-2" asChild>
                 <a href="/admin/careers">
                   <Briefcase className="h-6 w-6" />

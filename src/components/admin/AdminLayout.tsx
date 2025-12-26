@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 export default function AdminLayout() {
   const navigate = useNavigate();
-  const { user, loading, isAdmin, roles, profile, signOut } = useAuth();
+  const { user, loading, isAdmin, profile, signOut } = useAuth();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -15,9 +15,9 @@ export default function AdminLayout() {
   }, [loading, user, navigate]);
 
   useEffect(() => {
-    if (!loading && user && !isAdmin()) {
+    if (!loading && user && !isAdmin) {
       toast.error("You don't have admin access");
-      navigate("/portal");
+      navigate("/");
     }
   }, [loading, user, isAdmin, navigate]);
 
@@ -35,14 +35,14 @@ export default function AdminLayout() {
     );
   }
 
-  if (!user || !isAdmin()) {
+  if (!user || !isAdmin) {
     return null;
   }
 
   return (
     <div className="min-h-screen flex bg-background">
-      <AdminSidebar 
-        roles={roles} 
+      <AdminSidebar
+        roles={profile?.role ? [profile.role] : []}
         onSignOut={handleSignOut}
         profileName={profile?.full_name}
       />
