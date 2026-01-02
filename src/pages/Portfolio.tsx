@@ -327,19 +327,6 @@ const Portfolio = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-glow-dark via-glow-dark/50 to-transparent opacity-60" />
                   
-                  {/* Overlay on Hover */}
-                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <a 
-                      href={project.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="glass-button bg-primary text-primary-foreground px-6 py-3 rounded-full flex items-center gap-2 transform scale-90 group-hover:scale-100 transition-transform duration-300"
-                    >
-                      <Globe className="w-4 h-4" />
-                      Visit Live Site
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
 
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
