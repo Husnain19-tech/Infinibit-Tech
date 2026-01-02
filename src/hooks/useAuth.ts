@@ -1,7 +1,7 @@
 // hooks/useAuth.ts
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/clientSafe";
 
 // Role types
 export type UserRole = "owner" | "developer" | "hr" | "employee";
