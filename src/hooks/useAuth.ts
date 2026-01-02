@@ -69,15 +69,8 @@ export function useAuth() {
         setError(`Role error: ${rRes.error.message}`);
       }
 
-      // EMERGENCY FALLBACK: Hardcode owner for your specific email
-      // This ensures you never get locked out even if Supabase has RLS loops
-      let userRole: UserRole = (rRes.data?.role as UserRole) || 'employee';
-
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
-      if (currentUser?.email === 'husnainshabeer029@gmail.com') {
-        console.log("👑 Emergency Admin Bypass Activated for husnainshabeer029@gmail.com");
-        userRole = 'owner';
-      }
+      // Get role from database - all authorization is server-side via RLS
+      const userRole: UserRole = (rRes.data?.role as UserRole) || 'employee';
 
       const combined = { ...pRes.data, role: userRole };
       console.log("✅ Profile & Role loaded:", { userId, role: userRole });
