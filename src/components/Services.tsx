@@ -1,5 +1,9 @@
+import { useState, lazy, Suspense } from "react";
 import { Bot, Code, Smartphone, Globe, ShoppingCart, Database, Palette, Plug, Phone, Briefcase, Building, BarChart, MessageSquare, Cloud, Megaphone, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const ServicesScene = lazy(() => import("./3d/ServicesScene"));
 
 const services = [
   {
@@ -101,8 +105,15 @@ const services = [
 ];
 
 const Services = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   return (
     <section id="services" className="relative py-32 overflow-hidden">
+      {/* 3D Background Scene */}
+      <Suspense fallback={null}>
+        <ServicesScene hoveredIndex={hoveredIndex} />
+      </Suspense>
+      
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-dark-surface/50 to-background" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px]" />
@@ -110,15 +121,32 @@ const Services = () => {
       <div className="container relative z-10 mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-20 space-y-4">
-          <div className="inline-flex items-center space-x-2 glass-card px-4 py-2 mb-4">
+          <motion.div 
+            className="inline-flex items-center space-x-2 glass-card px-4 py-2 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
             <span className="text-sm text-primary">Our Expertise</span>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold">
+          </motion.div>
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
             <span className="neon-text">16</span> Tech Solutions
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
             From AI automation to SaaS development, we deliver enterprise-grade solutions that transform businesses.
-          </p>
+          </motion.p>
         </div>
         
         {/* Services grid */}
@@ -126,22 +154,57 @@ const Services = () => {
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <Link
+              <motion.div
                 key={index}
-                to={service.link}
-                className="glass-card p-6 hover:scale-105 transition-all duration-300 group cursor-pointer block"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
               >
-                <div className="mb-4 p-3 bg-primary/10 rounded-xl w-fit group-hover:bg-primary/20 transition-colors">
-                  <Icon className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                  {service.title}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-              </Link>
+                <Link
+                  to={service.link}
+                  className="glass-card p-6 transition-all duration-300 group cursor-pointer block relative overflow-hidden"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  {/* Hover glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
+                  
+                  {/* 3D-like depth shadow on hover */}
+                  <motion.div
+                    className="absolute -inset-1 bg-primary/10 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
+                  />
+                  
+                  <motion.div 
+                    className="relative z-10"
+                    whileHover={{ 
+                      scale: 1.02,
+                      rotateY: 5,
+                      rotateX: -5,
+                    }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <motion.div 
+                      className="mb-4 p-3 bg-primary/10 rounded-xl w-fit group-hover:bg-primary/20 transition-colors"
+                      whileHover={{ 
+                        scale: 1.1,
+                        rotate: 10,
+                        boxShadow: "0 0 20px rgba(0, 229, 255, 0.5)"
+                      }}
+                    >
+                      <Icon className="w-6 h-6 text-primary" />
+                    </motion.div>
+                    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
+                  </motion.div>
+                </Link>
+              </motion.div>
             );
           })}
         </div>
