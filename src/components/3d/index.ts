@@ -6,3 +6,4 @@ export {
   FloatingOctahedron,
   ParticleField,
 } from "./FloatingGeometry";
+export { default as ServicesScene } from "./ServicesScene";

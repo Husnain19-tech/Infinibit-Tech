@@ -1,3 +1,4 @@
+import { useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -5,20 +6,28 @@ import { servicesData } from "@/data/servicesData";
 import ServiceCard from "./ServiceCard";
 import { Button } from "./ui/button";
 import { AnimatedSection, GlowingOrb } from "@/components/animations";
-import { staggerContainer, fadeInUp, fadeInLeft } from "@/lib/animations";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
+
+const ServicesScene = lazy(() => import("./3d/ServicesScene"));
 
 const FeaturedServices = () => {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     // Select top 4 services to feature
     const featuredServices = servicesData.slice(0, 4);
 
     return (
         <section className="py-24 relative overflow-hidden">
+            {/* 3D Background Scene */}
+            <Suspense fallback={null}>
+                <ServicesScene hoveredIndex={hoveredIndex} />
+            </Suspense>
+
             {/* Background Elements */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,8%)] to-background -z-10" />
             <GlowingOrb x="90%" y="30%" size={500} intensity={0.08} />
             <GlowingOrb x="5%" y="70%" size={400} color="hsl(193, 100%, 39%)" intensity={0.06} />
 
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 relative z-10">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
                     <AnimatedSection className="max-w-2xl">
@@ -84,6 +93,8 @@ const FeaturedServices = () => {
                                 y: -10,
                                 transition: { duration: 0.3 }
                             }}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         >
                             <ServiceCard
                                 icon={service.icon}
