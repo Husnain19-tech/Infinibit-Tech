@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
@@ -10,6 +10,11 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter, ExternalLink, Globe, Layers, Search, X, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePublicPortfolio } from "@/hooks/usePortfolio";
+import { PortfolioCard3D } from "@/components/3d";
+
+// Lazy load 3D scene for performance
+const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
+const PortfolioSceneContent = lazy(() => import("@/components/3d/PortfolioScene"));
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -48,9 +53,18 @@ const Portfolio = () => {
       <Navigation />
       <Breadcrumbs />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
+      {/* Hero Section with 3D Background */}
+      <section className="relative pt-32 pb-20 px-6 overflow-hidden min-h-[60vh]">
+        {/* 3D Background Scene */}
+        <Suspense fallback={null}>
+          <div className="absolute inset-0 z-0">
+            <Scene3D cameraPosition={[0, 0, 8]}>
+              <PortfolioSceneContent />
+            </Scene3D>
+          </div>
+        </Suspense>
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background z-[1]" />
         <div className="container mx-auto relative z-10">
           <div className="text-center max-w-4xl mx-auto space-y-6 animate-fade-in">
             <Badge className="glass-card border-primary/30 text-primary px-6 py-2 text-sm">
@@ -147,110 +161,111 @@ const Portfolio = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project, index) => (
-                <Card 
-                  key={project.id} 
-                  className="glass-card overflow-hidden group border-primary/20 hover:border-primary/50 transition-all duration-500 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {/* Project Image */}
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={project.image_url || "/placeholder.svg"}
-                      alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-glow-dark via-glow-dark/50 to-transparent opacity-60" />
+                <PortfolioCard3D key={project.id}>
+                  <Card 
+                    className="glass-card overflow-hidden group border-primary/20 hover:border-primary/50 transition-all duration-500 animate-fade-in h-full"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    {/* Project Image */}
+                    <div className="relative h-56 overflow-hidden">
+                      <img
+                        src={project.image_url || "/placeholder.svg"}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-glow-dark via-glow-dark/50 to-transparent opacity-60" />
 
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-primary/90 text-primary-foreground border-0">
-                        {project.category}
-                      </Badge>
-                    </div>
-
-                    {/* Project Type Badge */}
-                    {project.project_type && (
-                      <div className="absolute top-4 right-4">
-                        <Badge className="glass-card border-white/20 text-foreground text-xs">
-                          {project.project_type}
+                      {/* Category Badge */}
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-primary/90 text-primary-foreground border-0">
+                          {project.category}
                         </Badge>
                       </div>
-                    )}
-                  </div>
 
-                  {/* Project Info */}
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                      {project.industry && (
-                        <p className="text-sm text-primary/80 mt-1 flex items-center gap-1">
-                          <Layers className="w-3 h-3" />
-                          {project.industry}
-                        </p>
+                      {/* Project Type Badge */}
+                      {project.project_type && (
+                        <div className="absolute top-4 right-4">
+                          <Badge className="glass-card border-white/20 text-foreground text-xs">
+                            {project.project_type}
+                          </Badge>
+                        </div>
                       )}
                     </div>
 
-                    <p className="text-sm text-muted-foreground line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    {/* Features */}
-                    {project.features && project.features.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Key Features</h4>
-                        <ul className="grid grid-cols-2 gap-1">
-                          {project.features.slice(0, 4).map((feature, idx) => (
-                            <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
-                              <span className="w-1 h-1 bg-primary rounded-full mt-1.5 flex-shrink-0" />
-                              <span className="line-clamp-1">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
+                    {/* Project Info */}
+                    <div className="p-6 space-y-4">
+                      <div>
+                        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                          {project.title}
+                        </h3>
+                        {project.industry && (
+                          <p className="text-sm text-primary/80 mt-1 flex items-center gap-1">
+                            <Layers className="w-3 h-3" />
+                            {project.industry}
+                          </p>
+                        )}
                       </div>
-                    )}
 
-                    {/* Tech Stack */}
-                    {project.tech_stack && project.tech_stack.length > 0 && (
-                      <div className="space-y-2">
-                        <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Tech Stack</h4>
-                        <div className="flex flex-wrap gap-1">
-                          {project.tech_stack.slice(0, 4).map((tech, idx) => (
-                            <Badge 
-                              key={idx} 
-                              variant="outline" 
-                              className="text-xs bg-primary/5 border-primary/20 text-muted-foreground hover:bg-primary/10"
-                            >
-                              {tech}
-                            </Badge>
-                          ))}
-                          {project.tech_stack.length > 4 && (
-                            <Badge 
-                              variant="outline" 
-                              className="text-xs bg-primary/5 border-primary/20 text-muted-foreground"
-                            >
-                              +{project.tech_stack.length - 4}
-                            </Badge>
-                          )}
+                      <p className="text-sm text-muted-foreground line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      {/* Features */}
+                      {project.features && project.features.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Key Features</h4>
+                          <ul className="grid grid-cols-2 gap-1">
+                            {project.features.slice(0, 4).map((feature, idx) => (
+                              <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
+                                <span className="w-1 h-1 bg-primary rounded-full mt-1.5 flex-shrink-0" />
+                                <span className="line-clamp-1">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    {/* View Project Link */}
-                    {project.external_url && (
-                      <a 
-                        href={project.external_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors group/link pt-2"
-                      >
-                        <span className="text-sm font-medium">View Live Project</span>
-                        <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                      </a>
-                    )}
-                  </div>
-                </Card>
+                      {/* Tech Stack */}
+                      {project.tech_stack && project.tech_stack.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-semibold text-primary uppercase tracking-wider">Tech Stack</h4>
+                          <div className="flex flex-wrap gap-1">
+                            {project.tech_stack.slice(0, 4).map((tech, idx) => (
+                              <Badge 
+                                key={idx} 
+                                variant="outline" 
+                                className="text-xs bg-primary/5 border-primary/20 text-muted-foreground hover:bg-primary/10"
+                              >
+                                {tech}
+                              </Badge>
+                            ))}
+                            {project.tech_stack.length > 4 && (
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs bg-primary/5 border-primary/20 text-muted-foreground"
+                              >
+                                +{project.tech_stack.length - 4}
+                              </Badge>
+                            )}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* View Project Link */}
+                      {project.external_url && (
+                        <a 
+                          href={project.external_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors group/link pt-2"
+                        >
+                          <span className="text-sm font-medium">View Live Project</span>
+                          <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                        </a>
+                      )}
+                    </div>
+                  </Card>
+                </PortfolioCard3D>
               ))}
             </div>
           )}
