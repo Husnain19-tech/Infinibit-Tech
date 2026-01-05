@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
@@ -6,6 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Linkedin, Twitter, Github, Mail } from "lucide-react";
 
+// Lazy load 3D components
+const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
+const TeamSceneContent = lazy(() => import("@/components/3d/TeamScene"));
+const TeamCard3D = lazy(() => import("@/components/3d/TeamCard3D"));
 const Team = () => {
   const leadership = [
     {
@@ -243,16 +248,18 @@ const Team = () => {
       <Navigation />
       <Breadcrumbs />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background */}
+      {/* Hero Section with 3D Background */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[60vh]">
+        {/* 3D Background */}
         <div className="absolute inset-0 z-0">
-          <img
-            src="/images/services/business-consultancy-1.jpg"
-            alt="Team Background"
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+          <Suspense fallback={
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
+          }>
+            <Scene3D className="absolute inset-0">
+              <TeamSceneContent />
+            </Scene3D>
+          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -281,9 +288,11 @@ const Team = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {leadership.map((member, idx) => (
-              <div key={idx} className="animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
-                <TeamMemberCard member={member} />
-              </div>
+              <Suspense key={idx} fallback={<div className="h-96 glass-card animate-pulse rounded-xl" />}>
+                <TeamCard3D index={idx}>
+                  <TeamMemberCard member={member} />
+                </TeamCard3D>
+              </Suspense>
             ))}
           </div>
         </div>
@@ -301,9 +310,11 @@ const Team = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {developers.map((member, idx) => (
-              <div key={idx} className="animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
-                <TeamMemberCard member={member} />
-              </div>
+              <Suspense key={idx} fallback={<div className="h-96 glass-card animate-pulse rounded-xl" />}>
+                <TeamCard3D index={idx}>
+                  <TeamMemberCard member={member} />
+                </TeamCard3D>
+              </Suspense>
             ))}
           </div>
         </div>
@@ -320,9 +331,11 @@ const Team = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {designers.map((member, idx) => (
-              <div key={idx} className="animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
-                <TeamMemberCard member={member} />
-              </div>
+              <Suspense key={idx} fallback={<div className="h-96 glass-card animate-pulse rounded-xl" />}>
+                <TeamCard3D index={idx}>
+                  <TeamMemberCard member={member} />
+                </TeamCard3D>
+              </Suspense>
             ))}
           </div>
         </div>
@@ -339,9 +352,11 @@ const Team = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {business.map((member, idx) => (
-              <div key={idx} className="animate-fade-in" style={{ animationDelay: `${idx * 100}ms` }}>
-                <TeamMemberCard member={member} />
-              </div>
+              <Suspense key={idx} fallback={<div className="h-96 glass-card animate-pulse rounded-xl" />}>
+                <TeamCard3D index={idx}>
+                  <TeamMemberCard member={member} />
+                </TeamCard3D>
+              </Suspense>
             ))}
           </div>
         </div>
