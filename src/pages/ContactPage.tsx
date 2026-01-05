@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Contact from "@/components/Contact";
@@ -5,22 +6,28 @@ import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Badge } from "@/components/ui/badge";
 
+// Lazy load 3D components
+const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
+const ContactSceneContent = lazy(() => import("@/components/3d/ContactScene"));
+
 const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <Breadcrumbs />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background */}
+      {/* Hero Section with 3D Background */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[50vh]">
+        {/* 3D Background */}
         <div className="absolute inset-0 z-0">
-          <img
-            src="/images/services/corporate-solutions-1.jpg"
-            alt="Contact Hero"
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+          <Suspense fallback={
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
+          }>
+            <Scene3D className="absolute inset-0">
+              <ContactSceneContent />
+            </Scene3D>
+          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
