@@ -9,3 +9,5 @@ export {
 export { default as ServicesScene } from "./ServicesScene";
 export { default as PortfolioCard3D } from "./PortfolioCard3D";
 export { default as PortfolioSceneContent } from "./PortfolioScene";
+export { default as TeamCard3D } from "./TeamCard3D";
+export { default as TeamSceneContent } from "./TeamScene";
