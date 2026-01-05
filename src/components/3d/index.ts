@@ -12,3 +12,5 @@ export { default as PortfolioSceneContent } from "./PortfolioScene";
 export { default as TeamCard3D } from "./TeamCard3D";
 export { default as TeamSceneContent } from "./TeamScene";
 export { default as ContactSceneContent } from "./ContactScene";
+export { default as CareersSceneContent } from "./CareersScene";
+export { default as JobCard3D } from "./JobCard3D";

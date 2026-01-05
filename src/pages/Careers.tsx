@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
@@ -10,6 +10,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Users, Heart, Zap, Trophy, MapPin, Clock, Briefcase, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+// Lazy load 3D components
+const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
+const CareersSceneContent = lazy(() => import("@/components/3d/CareersScene"));
+const JobCard3D = lazy(() => import("@/components/3d/JobCard3D"));
 
 const Careers = () => {
   const { toast } = useToast();
@@ -210,16 +215,18 @@ const Careers = () => {
       <Navigation />
       <Breadcrumbs />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background */}
+      {/* Hero Section with 3D Background */}
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[50vh]">
+        {/* 3D Background */}
         <div className="absolute inset-0 z-0">
-          <img
-            src="/images/services/corporate-solutions-2.jpg"
-            alt="Careers Background"
-            className="w-full h-full object-cover opacity-20"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+          <Suspense fallback={
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
+          }>
+            <Scene3D className="absolute inset-0">
+              <CareersSceneContent />
+            </Scene3D>
+          </Suspense>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto text-center relative z-10">
@@ -325,69 +332,73 @@ const Careers = () => {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12">Open Positions</h2>
           <div className="grid gap-6 mb-12">
-            {jobs.map((job) => (
-              <Card key={job.id} className="glass-card border-primary/20 hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div>
-                      <CardTitle className="text-2xl mb-2 text-primary">{job.title}</CardTitle>
-                      <CardDescription className="text-base">{job.description}</CardDescription>
-                    </div>
-                    <Button
-                      onClick={() => {
-                        setSelectedJob(job.id);
-                        setFormData({ ...formData, position: job.title });
-                        document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="whitespace-nowrap glass-button group"
-                    >
-                      Apply Now
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </div>
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
-                      <Briefcase className="w-3 h-3" />
-                      {job.department}
-                    </Badge>
-                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
-                      <MapPin className="w-3 h-3" />
-                      {job.location}
-                    </Badge>
-                    <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
-                      <Clock className="w-3 h-3" />
-                      {job.type}
-                    </Badge>
-                    <Badge variant="outline" className="border-primary/30">{job.experience}</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
-                    <div>
-                      <h4 className="font-semibold mb-3 text-foreground">Requirements:</h4>
-                      <ul className="space-y-2">
-                        {job.requirements.map((req, idx) => (
-                          <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
-                            <span className="text-primary mt-1">•</span>
-                            <span>{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-3 text-foreground">Responsibilities:</h4>
-                      <ul className="space-y-2">
-                        {job.responsibilities.map((resp, idx) => (
-                          <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
-                            <span className="text-primary mt-1">•</span>
-                            <span>{resp}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            {jobs.map((job, index) => (
+              <Suspense key={job.id} fallback={<div className="h-64 glass-card animate-pulse rounded-xl" />}>
+                <JobCard3D index={index}>
+                  <Card className="glass-card border-primary/20 hover:border-primary/50 transition-all duration-300">
+                    <CardHeader>
+                      <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                        <div>
+                          <CardTitle className="text-2xl mb-2 text-primary">{job.title}</CardTitle>
+                          <CardDescription className="text-base">{job.description}</CardDescription>
+                        </div>
+                        <Button
+                          onClick={() => {
+                            setSelectedJob(job.id);
+                            setFormData({ ...formData, position: job.title });
+                            document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="whitespace-nowrap glass-button group"
+                        >
+                          Apply Now
+                          <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
+                          <Briefcase className="w-3 h-3" />
+                          {job.department}
+                        </Badge>
+                        <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
+                          <MapPin className="w-3 h-3" />
+                          {job.location}
+                        </Badge>
+                        <Badge variant="secondary" className="flex items-center gap-1 glass-card border-primary/10">
+                          <Clock className="w-3 h-3" />
+                          {job.type}
+                        </Badge>
+                        <Badge variant="outline" className="border-primary/30">{job.experience}</Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-white/5">
+                        <div>
+                          <h4 className="font-semibold mb-3 text-foreground">Requirements:</h4>
+                          <ul className="space-y-2">
+                            {job.requirements.map((req, idx) => (
+                              <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
+                                <span className="text-primary mt-1">•</span>
+                                <span>{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold mb-3 text-foreground">Responsibilities:</h4>
+                          <ul className="space-y-2">
+                            {job.responsibilities.map((resp, idx) => (
+                              <li key={idx} className="text-muted-foreground flex items-start gap-2 text-sm">
+                                <span className="text-primary mt-1">•</span>
+                                <span>{resp}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </JobCard3D>
+              </Suspense>
             ))}
           </div>
         </div>
