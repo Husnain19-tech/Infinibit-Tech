@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -17,6 +17,9 @@ import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/clientSafe";
 
+const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
+const QuoteSceneContent = lazy(() => import("@/components/3d/QuoteScene"));
+const QuoteStepCard3D = lazy(() => import("@/components/3d/QuoteStepCard3D"));
 const services = [
   { id: "ai-automation", name: "AI Automation Solutions", basePrice: 15000 },
   { id: "custom-software", name: "Custom Software Development", basePrice: 25000 },
@@ -178,36 +181,52 @@ export default function Quote() {
     <div className="min-h-screen">
       <Navigation />
       <Breadcrumbs />
-      <div className="bg-gradient-to-b from-background via-background to-accent/5 pt-24 pb-16">
-        <div className="container max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Get Your Project Quote
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Tell us about your project and get an instant estimate
-            </p>
-          </div>
-
-        <div className="mb-8">
-          <Progress value={progress} className="h-2" />
-          <div className="flex justify-between mt-2 text-sm text-muted-foreground">
-            <span className={step >= 1 ? "text-primary font-semibold" : ""}>
-              Services
-            </span>
-            <span className={step >= 2 ? "text-primary font-semibold" : ""}>
-              Details
-            </span>
-            <span className={step >= 3 ? "text-primary font-semibold" : ""}>
-              Timeline
-            </span>
-            <span className={step >= 4 ? "text-primary font-semibold" : ""}>
-              Estimate
-            </span>
-          </div>
+      
+      {/* 3D Hero Background */}
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Suspense fallback={<div className="w-full h-full bg-background" />}>
+            <Scene3D className="w-full h-full">
+              <QuoteSceneContent />
+            </Scene3D>
+          </Suspense>
         </div>
+        
+        <div className="relative z-10 text-center px-4 pt-24">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-pulse">
+            Get Your Project Quote
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Tell us about your project and get an instant estimate
+          </p>
+        </div>
+      </section>
 
-        <Card className="glass-card p-8">
+      <div className="relative bg-gradient-to-b from-background via-background to-accent/5 pb-16 -mt-16">
+        <div className="container max-w-4xl mx-auto px-4 pt-8">
+          {/* Progress bar */}
+          <div className="mb-8 relative z-10">
+            <Progress value={progress} className="h-2" />
+            <div className="flex justify-between mt-2 text-sm text-muted-foreground">
+              <span className={step >= 1 ? "text-primary font-semibold" : ""}>
+                Services
+              </span>
+              <span className={step >= 2 ? "text-primary font-semibold" : ""}>
+                Details
+              </span>
+              <span className={step >= 3 ? "text-primary font-semibold" : ""}>
+                Timeline
+              </span>
+              <span className={step >= 4 ? "text-primary font-semibold" : ""}>
+                Estimate
+              </span>
+            </div>
+          </div>
+
+          {/* 3D Step Cards */}
+          <Suspense fallback={<div className="h-96 bg-card/50 rounded-xl animate-pulse" />}>
+            <AnimatePresence mode="wait">
+              <QuoteStepCard3D key={step} step={step} isActive={true}>
           {step === 1 && (
             <div className="space-y-6">
               <h2 className="text-2xl font-bold mb-6">Select Services</h2>
@@ -444,11 +463,13 @@ export default function Quote() {
               </Button>
             )}
           </div>
-        </Card>
+              </QuoteStepCard3D>
+            </AnimatePresence>
+          </Suspense>
+        </div>
       </div>
-    </div>
-    <Footer />
-    <ChatWidget />
+      <Footer />
+      <ChatWidget />
     </div>
   );
 }
