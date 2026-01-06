@@ -163,6 +163,105 @@ export const slidePageRight: Variants = {
   exit: { opacity: 0, x: '100%', transition: transitions.quick },
 };
 
+// 3D Page Transitions with perspective
+export const page3DForward: Variants = {
+  initial: { 
+    opacity: 0, 
+    x: '8%', 
+    rotateY: 8,
+    scale: 0.95,
+    filter: 'blur(8px)',
+  },
+  animate: { 
+    opacity: 1, 
+    x: 0, 
+    rotateY: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 100, damping: 20 },
+  },
+  exit: { 
+    opacity: 0, 
+    x: '-8%', 
+    rotateY: -8,
+    scale: 0.95,
+    filter: 'blur(8px)',
+    transition: { duration: 0.3 },
+  },
+};
+
+export const page3DBackward: Variants = {
+  initial: { 
+    opacity: 0, 
+    x: '-8%', 
+    rotateY: -8,
+    scale: 0.95,
+    filter: 'blur(8px)',
+  },
+  animate: { 
+    opacity: 1, 
+    x: 0, 
+    rotateY: 0,
+    scale: 1,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 100, damping: 20 },
+  },
+  exit: { 
+    opacity: 0, 
+    x: '8%', 
+    rotateY: 8,
+    scale: 0.95,
+    filter: 'blur(8px)',
+    transition: { duration: 0.3 },
+  },
+};
+
+export const page3DZoomIn: Variants = {
+  initial: { 
+    opacity: 0, 
+    scale: 1.1,
+    rotateX: -5,
+    filter: 'blur(10px)',
+  },
+  animate: { 
+    opacity: 1, 
+    scale: 1,
+    rotateX: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 100, damping: 20 },
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.9,
+    rotateX: 5,
+    filter: 'blur(10px)',
+    transition: { duration: 0.3 },
+  },
+};
+
+export const page3DZoomOut: Variants = {
+  initial: { 
+    opacity: 0, 
+    scale: 0.9,
+    rotateX: 5,
+    filter: 'blur(10px)',
+  },
+  animate: { 
+    opacity: 1, 
+    scale: 1,
+    rotateX: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 100, damping: 20 },
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 1.1,
+    rotateX: -5,
+    filter: 'blur(10px)',
+    transition: { duration: 0.3 },
+  },
+};
+
 // ============================================
 // HERO ANIMATIONS
 // ============================================
