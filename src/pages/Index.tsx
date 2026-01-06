@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import HomeHero from "@/components/HomeHero";
 import FeaturedServices from "@/components/FeaturedServices";
+import GlobalReach from "@/components/GlobalReach";
 import TechStack from "@/components/TechStack";
 import Stats from "@/components/Stats";
 import ProcessSection from "@/components/ProcessSection";
@@ -17,6 +18,7 @@ const Index = () => {
       <main id="home">
         <HomeHero />
         <FeaturedServices />
+        <GlobalReach />
         <TechStack />
         <Stats />
         <ProcessSection />
