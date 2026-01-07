@@ -16,7 +16,7 @@ const FeaturedServices = () => {
     const featuredServices = servicesData.slice(0, 4);
 
     return (
-        <section className="py-24 relative overflow-hidden">
+        <section id="services" className="py-24 relative overflow-hidden">
             {/* 3D Background Scene */}
             <Suspense fallback={null}>
                 <ServicesScene hoveredIndex={hoveredIndex} />

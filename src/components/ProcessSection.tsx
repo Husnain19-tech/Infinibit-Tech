@@ -55,7 +55,7 @@ const ProcessSection = () => {
     const isInView = useInView(ref, { once: true, amount: 0.2 });
 
     return (
-        <section ref={ref} className="py-24 relative overflow-hidden">
+        <section ref={ref} id="process" className="py-24 relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,8%)] to-background" />
             <GlowingOrb x="10%" y="20%" size={400} intensity={0.06} />

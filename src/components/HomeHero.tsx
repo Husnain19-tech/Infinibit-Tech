@@ -53,7 +53,7 @@ const HomeHero = () => {
     }, []);
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
             {/* Dynamic Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,10%)] to-background" />
 
