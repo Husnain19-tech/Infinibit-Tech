@@ -57,7 +57,7 @@ const Testimonials = () => {
     };
 
     return (
-        <section ref={ref} className="py-24 relative overflow-hidden">
+        <section ref={ref} id="testimonials" className="py-24 relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,6%)] to-background" />
             <GlowingOrb x="15%" y="30%" size={500} intensity={0.08} />

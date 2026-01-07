@@ -10,12 +10,14 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
+import ScrollNavigation from "@/components/ScrollNavigation";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <main id="home">
+      <ScrollNavigation />
+      <main>
         <HomeHero />
         <FeaturedServices />
         <GlobalReach />

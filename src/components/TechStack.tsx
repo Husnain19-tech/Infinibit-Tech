@@ -27,7 +27,7 @@ const TechStack = () => {
     const isInView = useInView(ref, { once: true, amount: 0.3 });
 
     return (
-        <section ref={ref} className="py-24 relative overflow-hidden">
+        <section ref={ref} id="tech-stack" className="py-24 relative overflow-hidden">
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-b from-[hsl(216,30%,6%)] via-[hsl(216,35%,8%)] to-[hsl(216,30%,6%)]" />
             <GlowingOrb x="25%" y="20%" size={500} intensity={0.06} />

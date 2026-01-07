@@ -22,7 +22,7 @@ const GlobalReach = () => {
   }, []);
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section id="global-reach" className="relative py-24 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-[hsl(216,30%,8%)] to-background" />
       

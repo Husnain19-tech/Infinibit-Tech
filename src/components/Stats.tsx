@@ -16,7 +16,7 @@ const Stats = () => {
     const isInView = useInView(ref, { once: true, amount: 0.4 });
 
     return (
-        <section ref={ref} className="py-24 relative overflow-hidden">
+        <section ref={ref} id="stats" className="py-24 relative overflow-hidden">
             {/* Background Image with Parallax */}
             <motion.div
                 className="absolute inset-0 z-0"
