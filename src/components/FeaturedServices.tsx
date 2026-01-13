@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,8 +7,7 @@ import ServiceCard from "./ServiceCard";
 import { Button } from "./ui/button";
 import { AnimatedSection, GlowingOrb } from "@/components/animations";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
-
-const ServicesScene = lazy(() => import("./3d/ServicesScene"));
+import { LazyServicesScene as ServicesScene } from "@/components/3d/Lazy3DLoader";
 
 const FeaturedServices = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

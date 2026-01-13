@@ -19,3 +19,15 @@ export { default as JobCard3D } from "./JobCard3D";
 export { default as QuoteSceneContent } from "./QuoteScene";
 export { default as QuoteStepCard3D } from "./QuoteStepCard3D";
 export { default as Globe3D } from "./Globe3D";
+// Lazy loading utilities
+export {
+  LazyScene3D,
+  LazyHeroSceneContent,
+  LazyPortfolioSceneContent,
+  LazyContactSceneContent,
+  LazyServicesScene,
+  LazyGlobe3D,
+  lazyWithRetry,
+  Scene3DFallback,
+  DelayedLoader,
+} from "./Lazy3DLoader";

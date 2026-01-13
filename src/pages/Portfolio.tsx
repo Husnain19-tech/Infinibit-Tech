@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Footer from "@/components/Footer";
@@ -7,14 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, TrendingUp, Users, Clock, Star, Quote, Filter, ExternalLink, Globe, Layers, Search, X, Loader2 } from "lucide-react";
+import { ArrowRight, TrendingUp, Users, Star, Globe, Layers, Search, X, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePublicPortfolio } from "@/hooks/usePortfolio";
 import { PortfolioCard3D } from "@/components/3d";
-
-// Lazy load 3D scene for performance
-const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
-const PortfolioSceneContent = lazy(() => import("@/components/3d/PortfolioScene"));
+import {
+    LazyScene3D as Scene3D,
+    LazyPortfolioSceneContent as PortfolioSceneContent,
+} from "@/components/3d/Lazy3DLoader";
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
