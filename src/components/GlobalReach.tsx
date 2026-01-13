@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { lazy, Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { Globe, Users, Building2, Handshake } from "lucide-react";
 import { fadeInUp, staggerContainer, scaleIn } from "@/lib/animations";
-
-const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
-const Globe3D = lazy(() => import("@/components/3d/Globe3D"));
+import {
+    LazyScene3D as Scene3D,
+    LazyGlobe3D as Globe3D,
+} from "@/components/3d/Lazy3DLoader";
 
 const stats = [
   { icon: Globe, value: "25+", label: "Countries Served" },

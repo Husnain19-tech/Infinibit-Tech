@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Zap, Shield, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, Suspense } from "react";
 import {
     ParticleBackground,
     CyberGrid,
@@ -16,10 +16,10 @@ import {
     heroCTA,
     scaleIn,
 } from "@/lib/animations";
-
-// Lazy load 3D components for performance
-const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
-const HeroSceneContent = lazy(() => import("@/components/3d/HeroScene"));
+import {
+    LazyScene3D as Scene3D,
+    LazyHeroSceneContent as HeroSceneContent,
+} from "@/components/3d/Lazy3DLoader";
 
 // Floating tech icons data
 const floatingIcons = [

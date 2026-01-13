@@ -1,14 +1,14 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { Badge } from "@/components/ui/badge";
-
-// Lazy load 3D components
-const Scene3D = lazy(() => import("@/components/3d/Scene3D"));
-const ContactSceneContent = lazy(() => import("@/components/3d/ContactScene"));
+import {
+    LazyScene3D as Scene3D,
+    LazyContactSceneContent as ContactSceneContent,
+} from "@/components/3d/Lazy3DLoader";
 
 const ContactPage = () => {
   return (
