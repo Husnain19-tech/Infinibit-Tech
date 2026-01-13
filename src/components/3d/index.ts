@@ -1,4 +1,5 @@
 export { default as Scene3D } from "./Scene3D";
+export { default as OptimizedScene3D } from "./OptimizedScene3D";
 export { default as HeroSceneContent } from "./HeroScene";
 export {
   FloatingIcosahedron,
@@ -6,6 +7,7 @@ export {
   FloatingOctahedron,
   ParticleField,
 } from "./FloatingGeometry";
+export * from "./PhysicsScene";
 export { default as ServicesScene } from "./ServicesScene";
 export { default as PortfolioCard3D } from "./PortfolioCard3D";
 export { default as PortfolioSceneContent } from "./PortfolioScene";
