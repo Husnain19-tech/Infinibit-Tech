@@ -1,6 +1,6 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Environment, Stars } from "@react-three/drei";
+import { Stars } from "@react-three/drei";
 import * as THREE from "three";
 import {
   FloatingIcosahedron,
@@ -94,8 +94,9 @@ const HeroSceneContent = ({ mousePosition }: HeroSceneContentProps) => {
         <FloatingIcosahedron position={[-5, 1, -4]} scale={0.35} color="#00E5FF" speed={0.9} distort={0.3} />
       </group>
 
-      {/* Environment for reflections */}
-      <Environment preset="night" />
+      {/* Simple additional lighting for reflections - no external HDR fetch */}
+      <pointLight position={[5, 5, 5]} intensity={0.4} color="#00E5FF" />
+      <pointLight position={[-5, -5, 5]} intensity={0.2} color="#0097A7" />
     </>
   );
 };

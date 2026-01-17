@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import logo from "@/assets/logo.jpg";
 import ThemeToggle from "./ThemeToggle";
+import PrefetchLink from "./PrefetchLink";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -46,22 +47,22 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <PrefetchLink to="/" className="flex items-center space-x-3">
             <img src={logo} alt="Infinibit Tech" className="w-12 h-12 rounded-lg" />
             <span className="text-xl font-bold neon-text">INFINIBIT TECH</span>
-          </Link>
+          </PrefetchLink>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               link.isRoute ? (
-                <Link
+                <PrefetchLink
                   key={link.href}
                   to={link.href}
                   className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
                   {link.label}
-                </Link>
+                </PrefetchLink>
               ) : (
                 <button
                   key={link.href}
@@ -74,7 +75,7 @@ const Navigation = () => {
             ))}
             <ThemeToggle />
             <Button asChild className="glass-button bg-primary text-primary-foreground hover:bg-primary/90">
-              <Link to="/quote">Get a Quote</Link>
+              <PrefetchLink to="/quote">Get a Quote</PrefetchLink>
             </Button>
           </div>
 
@@ -99,14 +100,14 @@ const Navigation = () => {
           <div className="md:hidden mt-4 glass-card p-6 space-y-4">
             {navLinks.map((link) => (
               link.isRoute ? (
-                <Link
+                <PrefetchLink
                   key={link.href}
                   to={link.href}
                   className="block text-sm font-medium text-foreground hover:text-primary transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </Link>
+                </PrefetchLink>
               ) : (
                 <button
                   key={link.href}
@@ -118,7 +119,7 @@ const Navigation = () => {
               )
             ))}
             <Button asChild className="w-full glass-button bg-primary text-primary-foreground hover:bg-primary/90">
-              <Link to="/quote">Get a Quote</Link>
+              <PrefetchLink to="/quote">Get a Quote</PrefetchLink>
             </Button>
           </div>
         )}

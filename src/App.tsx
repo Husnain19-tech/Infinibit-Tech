@@ -1,14 +1,16 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState, useTransition } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { HelmetProvider } from "react-helmet-async";
 import PageTransition3D from "./components/PageTransition3D";
 import ScrollToTop from "./components/ScrollToTop";
 import BackToTopButton from "./components/BackToTopButton";
+import RouteLoader from "./components/RouteLoader";
+import { prefetchCriticalRoutes } from "./hooks/useRoutePrefetch";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -51,17 +53,43 @@ const AdminServices = lazy(() => import("./pages/admin/Services"));
 const AdminPortfolio = lazy(() => import("./pages/admin/Portfolio"));
 const Inventory = lazy(() => import("./pages/admin/Inventory"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes (was cacheTime)
+    },
+  },
+});
 
-// Loading fallback component
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-      <span className="text-muted-foreground text-sm">Loading...</span>
-    </div>
-  </div>
-);
+// Route change detector for non-blocking loader
+const RouteChangeHandler = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  const [isNavigating, setIsNavigating] = useState(false);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    // Show loader briefly during route change
+    setIsNavigating(true);
+    const timer = setTimeout(() => setIsNavigating(false), 100);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  // Prefetch critical routes after initial load
+  useEffect(() => {
+    prefetchCriticalRoutes();
+  }, []);
+
+  return (
+    <>
+      <RouteLoader isLoading={isNavigating || isPending} />
+      {children}
+    </>
+  );
+};
+
+// Minimal inline fallback - keeps current page visible
+const MinimalFallback = () => null;
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -72,51 +100,53 @@ const App = () => (
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
-            <PageTransition3D>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/portfolio" element={<Portfolio />} />
-                  <Route path="/quote" element={<Quote />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/services/ai-automation" element={<AIAutomation />} />
-                  <Route path="/services/custom-software" element={<CustomSoftware />} />
-                  <Route path="/services/mobile-app" element={<MobileApp />} />
-                  <Route path="/services/web-app" element={<WebApp />} />
-                  <Route path="/services/ecommerce" element={<Ecommerce />} />
-                  <Route path="/services/crm-erp" element={<CRMERP />} />
-                  <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
-                  <Route path="/services/api-development" element={<APIdev />} />
-                  <Route path="/services/call-center" element={<CallCenter />} />
-                  <Route path="/services/business-consultancy" element={<BusinessConsultancy />} />
-                  <Route path="/services/corporate-solutions" element={<CorporateSolutions />} />
-                  <Route path="/services/data-engineering" element={<DataEngineering />} />
-                  <Route path="/services/ai-chatbot" element={<AIChatbot />} />
-                  <Route path="/services/saas" element={<SaaS />} />
-                  <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
-                  <Route path="/services/quality-assurance" element={<QualityAssurance />} />
-                  <Route path="/careers" element={<Careers />} />
-                  <Route path="/team" element={<Team />} />
-                  <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/auth" element={<Auth />} />
+            <RouteChangeHandler>
+              <PageTransition3D>
+                <Suspense fallback={<MinimalFallback />}>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/portfolio" element={<Portfolio />} />
+                    <Route path="/quote" element={<Quote />} />
+                    <Route path="/services" element={<Services />} />
+                    <Route path="/services/ai-automation" element={<AIAutomation />} />
+                    <Route path="/services/custom-software" element={<CustomSoftware />} />
+                    <Route path="/services/mobile-app" element={<MobileApp />} />
+                    <Route path="/services/web-app" element={<WebApp />} />
+                    <Route path="/services/ecommerce" element={<Ecommerce />} />
+                    <Route path="/services/crm-erp" element={<CRMERP />} />
+                    <Route path="/services/ui-ux-design" element={<UIUXDesign />} />
+                    <Route path="/services/api-development" element={<APIdev />} />
+                    <Route path="/services/call-center" element={<CallCenter />} />
+                    <Route path="/services/business-consultancy" element={<BusinessConsultancy />} />
+                    <Route path="/services/corporate-solutions" element={<CorporateSolutions />} />
+                    <Route path="/services/data-engineering" element={<DataEngineering />} />
+                    <Route path="/services/ai-chatbot" element={<AIChatbot />} />
+                    <Route path="/services/saas" element={<SaaS />} />
+                    <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+                    <Route path="/services/quality-assurance" element={<QualityAssurance />} />
+                    <Route path="/careers" element={<Careers />} />
+                    <Route path="/team" element={<Team />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/auth" element={<Auth />} />
 
-                  {/* Admin Routes */}
-                  <Route path="/admin" element={<AdminLayout />}>
-                    <Route index element={<Dashboard />} />
-                    <Route path="contacts" element={<Contacts />} />
-                    <Route path="quotes" element={<Quotes />} />
-                    <Route path="chats" element={<Chats />} />
-                    <Route path="users" element={<UserManagement />} />
-                    <Route path="audit-logs" element={<AuditLogs />} />
-                    <Route path="inventory" element={<Inventory />} />
-                    <Route path="services" element={<AdminServices />} />
-                    <Route path="portfolio" element={<AdminPortfolio />} />
-                  </Route>
+                    {/* Admin Routes */}
+                    <Route path="/admin" element={<AdminLayout />}>
+                      <Route index element={<Dashboard />} />
+                      <Route path="contacts" element={<Contacts />} />
+                      <Route path="quotes" element={<Quotes />} />
+                      <Route path="chats" element={<Chats />} />
+                      <Route path="users" element={<UserManagement />} />
+                      <Route path="audit-logs" element={<AuditLogs />} />
+                      <Route path="inventory" element={<Inventory />} />
+                      <Route path="services" element={<AdminServices />} />
+                      <Route path="portfolio" element={<AdminPortfolio />} />
+                    </Route>
 
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </PageTransition3D>
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+              </PageTransition3D>
+            </RouteChangeHandler>
             <BackToTopButton />
           </BrowserRouter>
         </TooltipProvider>

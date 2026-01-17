@@ -1,6 +1,6 @@
 import { useRef, useMemo, Suspense } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Sphere, Box, Torus, Environment } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float, MeshDistortMaterial, Sphere, Box, Torus } from "@react-three/drei";
 import * as THREE from "three";
 
 interface FloatingShapeProps {
@@ -203,7 +203,10 @@ const ServicesSceneContent = ({ hoveredIndex }: ServicesSceneContentProps) => {
       />
       
       <MiniParticleField count={80} />
-      <Environment preset="city" />
+      
+      {/* Lightweight lighting instead of Environment preset */}
+      <pointLight position={[5, 5, 5]} intensity={0.4} color="#00E5FF" />
+      <pointLight position={[-5, -5, 5]} intensity={0.2} color="#0077B6" />
     </>
   );
 };
