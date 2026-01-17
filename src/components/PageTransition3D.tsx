@@ -26,123 +26,39 @@ const getRouteInfo = (path: string): { order: number; depth: number } => {
   return { order, depth: segments.length };
 };
 
-// 3D Transition variants based on navigation direction
+// Simplified, faster transition variants
 const createTransitionVariants = (direction: "forward" | "backward" | "deeper" | "shallower"): Variants => {
   const configs = {
     forward: {
-      initial: { 
-        opacity: 0, 
-        x: "8%", 
-        rotateY: 8,
-        scale: 0.95,
-        filter: "blur(8px)",
-        transformPerspective: 1200,
-      },
-      animate: { 
-        opacity: 1, 
-        x: 0, 
-        rotateY: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        transformPerspective: 1200,
-      },
-      exit: { 
-        opacity: 0, 
-        x: "-8%", 
-        rotateY: -8,
-        scale: 0.95,
-        filter: "blur(8px)",
-        transformPerspective: 1200,
-      },
+      initial: { opacity: 0, x: "4%", scale: 0.98 },
+      animate: { opacity: 1, x: 0, scale: 1 },
+      exit: { opacity: 0, x: "-4%", scale: 0.98 },
     },
     backward: {
-      initial: { 
-        opacity: 0, 
-        x: "-8%", 
-        rotateY: -8,
-        scale: 0.95,
-        filter: "blur(8px)",
-        transformPerspective: 1200,
-      },
-      animate: { 
-        opacity: 1, 
-        x: 0, 
-        rotateY: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        transformPerspective: 1200,
-      },
-      exit: { 
-        opacity: 0, 
-        x: "8%", 
-        rotateY: 8,
-        scale: 0.95,
-        filter: "blur(8px)",
-        transformPerspective: 1200,
-      },
+      initial: { opacity: 0, x: "-4%", scale: 0.98 },
+      animate: { opacity: 1, x: 0, scale: 1 },
+      exit: { opacity: 0, x: "4%", scale: 0.98 },
     },
     deeper: {
-      initial: { 
-        opacity: 0, 
-        scale: 1.1, 
-        z: 200,
-        rotateX: -5,
-        filter: "blur(10px)",
-        transformPerspective: 1200,
-      },
-      animate: { 
-        opacity: 1, 
-        scale: 1, 
-        z: 0,
-        rotateX: 0,
-        filter: "blur(0px)",
-        transformPerspective: 1200,
-      },
-      exit: { 
-        opacity: 0, 
-        scale: 0.9, 
-        z: -200,
-        rotateX: 5,
-        filter: "blur(10px)",
-        transformPerspective: 1200,
-      },
+      initial: { opacity: 0, scale: 1.02 },
+      animate: { opacity: 1, scale: 1 },
+      exit: { opacity: 0, scale: 0.98 },
     },
     shallower: {
-      initial: { 
-        opacity: 0, 
-        scale: 0.9, 
-        z: -200,
-        rotateX: 5,
-        filter: "blur(10px)",
-        transformPerspective: 1200,
-      },
-      animate: { 
-        opacity: 1, 
-        scale: 1, 
-        z: 0,
-        rotateX: 0,
-        filter: "blur(0px)",
-        transformPerspective: 1200,
-      },
-      exit: { 
-        opacity: 0, 
-        scale: 1.1, 
-        z: 200,
-        rotateX: -5,
-        filter: "blur(10px)",
-        transformPerspective: 1200,
-      },
+      initial: { opacity: 0, scale: 0.98 },
+      animate: { opacity: 1, scale: 1 },
+      exit: { opacity: 0, scale: 1.02 },
     },
   };
 
   return configs[direction];
 };
 
+// Faster, snappier transition
 const transitionConfig = {
-  type: "spring" as const,
-  stiffness: 100,
-  damping: 20,
-  mass: 0.8,
+  type: "tween" as const,
+  duration: 0.2,
+  ease: "easeOut" as const,
 };
 
 /**
@@ -189,25 +105,10 @@ const PageTransition3D = ({ children }: PageTransition3DProps) => {
         variants={variants}
         transition={transitionConfig}
         style={{
-          willChange: "opacity, transform, filter",
+          willChange: "opacity, transform",
           minHeight: "100vh",
-          transformStyle: "preserve-3d",
-          perspective: "1200px",
         }}
       >
-        {/* Animated overlay for extra depth effect */}
-        <motion.div
-          className="fixed inset-0 pointer-events-none z-50"
-          initial={{ opacity: 0.3 }}
-          animate={{ opacity: 0 }}
-          exit={{ opacity: 0.3 }}
-          transition={{ duration: 0.3 }}
-          style={{
-            background: "radial-gradient(ellipse at center, transparent 0%, hsl(var(--background)) 100%)",
-          }}
-        />
-        
-        {/* Page content */}
         {children}
       </motion.div>
     </AnimatePresence>
