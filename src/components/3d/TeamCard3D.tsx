@@ -18,14 +18,14 @@ const TeamCard3D = ({ children, index = 0 }: TeamCard3DProps) => {
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     const mouseX = e.clientX - centerX;
     const mouseY = e.clientY - centerY;
-    
+
     // Calculate rotation (max 15 degrees)
-    const rotateYValue = (mouseX / (rect.width / 2)) * 15;
-    const rotateXValue = -(mouseY / (rect.height / 2)) * 15;
-    
+    const rotateYValue = (mouseX / (rect.width / 2)) * 3; // Reduced from 15
+    const rotateXValue = -(mouseY / (rect.height / 2)) * 3; // Reduced from 15
+
     setRotateX(rotateXValue);
     setRotateY(rotateYValue);
   };
@@ -42,8 +42,8 @@ const TeamCard3D = ({ children, index = 0 }: TeamCard3DProps) => {
       className="relative h-full"
       initial={{ opacity: 0, y: 50, rotateX: -10 }}
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ 
-        duration: 0.6, 
+      transition={{
+        duration: 0.6,
         delay: index * 0.1,
         ease: [0.25, 0.46, 0.45, 0.94]
       }}
@@ -67,18 +67,19 @@ const TeamCard3D = ({ children, index = 0 }: TeamCard3DProps) => {
         }}
         style={{
           transformStyle: "preserve-3d",
+          willChange: "transform"
         }}
       >
         {/* Glow effect behind card */}
         <motion.div
-          className="absolute -inset-2 rounded-xl bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 blur-xl"
+          className="absolute -inset-2 rounded-xl bg-gradient-to-r from-primary/30 via-accent/20 to-primary/30 blur-xl pointer-events-none"
           animate={{
             opacity: isHovered ? 0.6 : 0,
             scale: isHovered ? 1.05 : 0.95,
           }}
           transition={{ duration: 0.3 }}
         />
-        
+
         {/* Reflection/shine effect */}
         <motion.div
           className="absolute inset-0 rounded-xl pointer-events-none z-10 overflow-hidden"
@@ -86,7 +87,7 @@ const TeamCard3D = ({ children, index = 0 }: TeamCard3DProps) => {
             opacity: isHovered ? 1 : 0,
           }}
         >
-          <div 
+          <div
             className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent"
             style={{
               transform: `translateX(${rotateY * 2}px) translateY(${-rotateX * 2}px)`,

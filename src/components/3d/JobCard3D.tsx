@@ -18,14 +18,14 @@ const JobCard3D = ({ children, index = 0 }: JobCard3DProps) => {
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     const mouseX = e.clientX - centerX;
     const mouseY = e.clientY - centerY;
-    
-    // Subtle rotation for job cards (max 5 degrees)
-    const rotateYValue = (mouseX / (rect.width / 2)) * 5;
-    const rotateXValue = -(mouseY / (rect.height / 2)) * 3;
-    
+
+    // Subtle rotation for job cards (reduced for stability)
+    const rotateYValue = (mouseX / (rect.width / 2)) * 2;
+    const rotateXValue = -(mouseY / (rect.height / 2)) * 2;
+
     setRotateX(rotateXValue);
     setRotateY(rotateYValue);
   };
@@ -42,8 +42,8 @@ const JobCard3D = ({ children, index = 0 }: JobCard3DProps) => {
       className="relative"
       initial={{ opacity: 0, y: 40, rotateX: -5 }}
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      transition={{ 
-        duration: 0.5, 
+      transition={{
+        duration: 0.5,
         delay: index * 0.1,
         ease: [0.25, 0.46, 0.45, 0.94]
       }}
@@ -67,24 +67,25 @@ const JobCard3D = ({ children, index = 0 }: JobCard3DProps) => {
         }}
         style={{
           transformStyle: "preserve-3d",
+          willChange: "transform"
         }}
       >
         {/* Glow effect */}
         <motion.div
-          className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 blur-lg"
+          className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 blur-lg pointer-events-none"
           animate={{
             opacity: isHovered ? 0.5 : 0,
             scale: isHovered ? 1.02 : 0.98,
           }}
           transition={{ duration: 0.3 }}
         />
-        
+
         {/* Shine effect on hover */}
         <motion.div
           className="absolute inset-0 rounded-xl pointer-events-none z-10 overflow-hidden"
           animate={{ opacity: isHovered ? 1 : 0 }}
         >
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent"
             animate={{
               x: isHovered ? ["-100%", "100%"] : "-100%",
@@ -98,7 +99,7 @@ const JobCard3D = ({ children, index = 0 }: JobCard3DProps) => {
 
         {/* Left accent bar */}
         <motion.div
-          className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-gradient-to-b from-primary via-accent to-primary"
+          className="absolute left-0 top-4 bottom-4 w-1 rounded-full bg-gradient-to-b from-primary via-accent to-primary pointer-events-none"
           animate={{
             opacity: isHovered ? 1 : 0.3,
             scaleY: isHovered ? 1 : 0.8,

@@ -18,15 +18,15 @@ const PortfolioCard3D = ({ children, className = "" }: PortfolioCard3DProps) => 
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     const mouseX = e.clientX - centerX;
     const mouseY = e.clientY - centerY;
-    
-    // Calculate rotation based on mouse position (max 15 degrees)
-    const maxRotation = 15;
+
+    // Calculate rotation based on mouse position (reduced for better interaction)
+    const maxRotation = 3; // Reduced from 15
     const rotX = (mouseY / (rect.height / 2)) * -maxRotation;
     const rotY = (mouseX / (rect.width / 2)) * maxRotation;
-    
+
     setRotateX(rotX);
     setRotateY(rotY);
   };
@@ -67,23 +67,24 @@ const PortfolioCard3D = ({ children, className = "" }: PortfolioCard3DProps) => 
         }}
         style={{
           transformStyle: "preserve-3d",
+          willChange: "transform"
         }}
         className="relative"
       >
         {/* Glow effect */}
         <motion.div
-          className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 blur-lg"
+          className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 blur-lg pointer-events-none"
           animate={{
             opacity: isHovered ? 0.6 : 0,
           }}
           transition={{ duration: 0.3 }}
         />
-        
+
         {/* Card content */}
         <div className="relative z-10">
           {children}
         </div>
-        
+
         {/* Reflection/shine effect */}
         <motion.div
           className="absolute inset-0 rounded-xl pointer-events-none overflow-hidden"
