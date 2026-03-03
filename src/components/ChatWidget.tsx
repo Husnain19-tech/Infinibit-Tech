@@ -39,7 +39,7 @@ const formSchema = z.object({
     .max(1000, { message: "Message must be less than 1000 characters" }),
 });
 
-const ChatWidget = () => {
+const ChatWidget = ({ children }: { children?: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
 
@@ -70,7 +70,7 @@ const ChatWidget = () => {
         title: "Message sent!",
         description: "We'll get back to you as soon as possible.",
       });
-      
+
       form.reset();
       setIsOpen(false);
     } catch (error) {
@@ -85,15 +85,11 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* Floating Chat Button */}
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg bg-primary hover:bg-primary/90 text-primary-foreground z-50 glow-pulse"
-        size="icon"
-      >
-        <MessageCircle className="h-6 w-6" />
-        <span className="sr-only">Open chat</span>
-      </Button>
+      {children ? (
+        <div onClick={() => setIsOpen(true)} className="inline-block cursor-pointer">
+          {children}
+        </div>
+      ) : null}
 
       {/* Chat Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

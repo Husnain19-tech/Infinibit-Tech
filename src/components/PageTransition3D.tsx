@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useEffect, useState } from "react";
+import { ReactNode, useRef, useEffect, useState, cloneElement, isValidElement } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
@@ -96,7 +96,7 @@ const PageTransition3D = ({ children }: PageTransition3DProps) => {
   const variants = createTransitionVariants(direction);
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="popLayout" initial={false}>
       <motion.div
         key={location.pathname}
         initial="initial"
@@ -107,9 +107,11 @@ const PageTransition3D = ({ children }: PageTransition3DProps) => {
         style={{
           willChange: "opacity, transform",
           minHeight: "100vh",
+          width: "100%",
         }}
+        className="overflow-hidden"
       >
-        {children}
+        {isValidElement(children) ? cloneElement(children as React.ReactElement, { location, key: location.pathname }) : children}
       </motion.div>
     </AnimatePresence>
   );

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/clientSafe";
 import { useToast } from "@/hooks/use-toast";
+import { mockPortfolioProjects } from "@/data/portfolioData";
 
 export interface PortfolioProject {
   id: string;
@@ -150,7 +151,7 @@ export function usePortfolio() {
   const uploadImage = async (file: File): Promise<string> => {
     const fileExt = file.name.split(".").pop();
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
-    
+
     const { error: uploadError } = await supabase.storage
       .from("portfolio-images")
       .upload(fileName, file);
@@ -181,14 +182,30 @@ export function usePublicPortfolio() {
   const { data: projects, isLoading } = useQuery({
     queryKey: ["public-portfolio"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("portfolio_projects")
-        .select("*")
-        .eq("is_active", true)
-        .order("display_order", { ascending: true });
+      try {
+        const fetchPromise = supabase
+          .from("portfolio_projects")
+          .select("*")
+          .eq("is_active", true)
+          .order("display_order", { ascending: true });
 
-      if (error) throw error;
-      return data as PortfolioProject[];
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+        );
+
+        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]) as any;
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          return data as PortfolioProject[];
+        }
+      } catch (err) {
+        console.warn("Portfolio fetch failed or timed out, using mock data.", err);
+      }
+
+      // Fallback to mock data if empty or error
+      return mockPortfolioProjects;
     },
   });
 

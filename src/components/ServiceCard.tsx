@@ -24,8 +24,8 @@ const ServiceCard = ({ icon: Icon, title, description, link, imageUrl, index }: 
 
     // Spring physics for smooth movement
     const springConfig = { stiffness: 150, damping: 15 };
-    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), springConfig);
-    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), springConfig);
+    const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [1.5, -1.5]), springConfig);
+    const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-1.5, 1.5]), springConfig);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!ref.current) return;
@@ -40,15 +40,15 @@ const ServiceCard = ({ icon: Icon, title, description, link, imageUrl, index }: 
     };
 
     return (
-        <Link to={link} className="block h-full">
+        <Link to={link} className="block h-full group perspective-1000">
             <motion.div
                 ref={ref}
-                className="group relative h-full perspective-1000"
+                className="relative h-full"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 style={{
                     rotateX,
@@ -56,27 +56,26 @@ const ServiceCard = ({ icon: Icon, title, description, link, imageUrl, index }: 
                     transformStyle: "preserve-3d",
                 }}
             >
-                <motion.div
-                    className="glass-card h-full flex flex-col relative overflow-hidden rounded-2xl"
-                    whileHover={{
-                        boxShadow: "0 25px 50px -12px rgba(0, 229, 255, 0.25)",
-                        borderColor: "hsl(187, 100%, 50%)",
-                    }}
-                    transition={{ duration: 0.3 }}
+                <div
+                    className="glass-card h-full flex flex-col relative overflow-hidden rounded-2xl transition-all duration-300"
                 >
                     {/* Image Section */}
                     <div className="relative h-48 overflow-hidden bg-gradient-to-br from-primary/20 to-background">
                         {imageUrl ? (
                             <>
-                                <motion.img
+                                <div className="absolute inset-0 bg-primary/10 animate-pulse skeleton-loader z-0" />
+                                <img
                                     src={imageUrl}
                                     alt={title}
-                                    className="w-full h-full object-cover"
+                                    className="relative z-10 w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                                     loading="lazy"
-                                    whileHover={{ scale: 1.1, filter: "blur(2px)" }}
-                                    transition={{ duration: 0.5 }}
+                                    onLoad={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.previousElementSibling?.classList.add('hidden');
+                                        target.classList.add('loaded');
+                                    }}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-60" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-60 pointer-events-none z-20" />
                             </>
                         ) : (
                             <div className="w-full h-full flex items-center justify-center">
@@ -85,34 +84,22 @@ const ServiceCard = ({ icon: Icon, title, description, link, imageUrl, index }: 
                         )}
 
                         {/* Hover Overlay */}
-                        <motion.div
-                            className="absolute inset-0 bg-primary/95 backdrop-blur-sm flex items-center justify-center"
-                            initial={{ opacity: 0 }}
-                            whileHover={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                        >
+                        <div className="absolute inset-0 bg-primary/20 backdrop-blur-[2px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <div className="text-center px-6 space-y-3">
-                                <motion.div
-                                    className="w-16 h-16 rounded-xl bg-white/20 flex items-center justify-center mx-auto"
-                                    initial={{ scale: 0, rotate: -180 }}
-                                    whileHover={{ scale: 1, rotate: 0 }}
-                                    transition={{ type: "spring", stiffness: 200 }}
-                                >
+                                <div className="w-16 h-16 rounded-xl bg-white/20 flex items-center justify-center mx-auto transition-all duration-500 scale-0 -rotate-180 group-hover:scale-100 group-hover:rotate-0">
                                     <Icon className="w-8 h-8 text-white" />
-                                </motion.div>
-                                <p className="text-white font-semibold text-lg">Explore Service</p>
-                                <p className="text-white/90 text-sm">{title} solutions</p>
+                                </div>
+                                <p className="text-white font-semibold text-lg translate-y-4 opacity-0 transition-all duration-300 delay-75 group-hover:translate-y-0 group-hover:opacity-100">Explore Service</p>
+                                <p className="text-white/90 text-sm translate-y-4 opacity-0 transition-all duration-300 delay-150 group-hover:translate-y-0 group-hover:opacity-100">{title} solutions</p>
                             </div>
-                        </motion.div>
+                        </div>
 
                         {/* Icon Badge */}
-                        <motion.div
-                            className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-background/80 backdrop-blur-sm flex items-center justify-center border border-primary/20"
-                            whileHover={{ rotate: 360, scale: 1.1 }}
-                            transition={{ duration: 0.6 }}
+                        <div
+                            className="absolute top-4 left-4 w-12 h-12 rounded-xl bg-background/80 backdrop-blur-md flex items-center justify-center border border-primary/20 z-30 transition-all duration-700 ease-in-out group-hover:scale-110 group-hover:rotate-[360deg] group-hover:shadow-[0_0_15px_rgba(0,229,255,0.5)]"
                         >
                             <Icon className="w-6 h-6 text-primary" />
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* Content Section */}
@@ -145,15 +132,13 @@ const ServiceCard = ({ icon: Icon, title, description, link, imageUrl, index }: 
                     </div>
 
                     {/* Glow Effect */}
-                    <motion.div
-                        className="absolute inset-0 pointer-events-none rounded-2xl"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
+                    <div
+                        className="absolute inset-0 pointer-events-none rounded-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                         style={{
                             background: "radial-gradient(circle at center, rgba(0, 229, 255, 0.1) 0%, transparent 70%)",
                         }}
                     />
-                </motion.div>
+                </div>
             </motion.div>
         </Link>
     );

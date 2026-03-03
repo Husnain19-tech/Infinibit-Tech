@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import logo from "@/assets/logo.jpg";
-import ThemeToggle from "./ThemeToggle";
 import PrefetchLink from "./PrefetchLink";
 
 const Navigation = () => {
@@ -40,9 +39,8 @@ const Navigation = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "glass-card py-4" : "py-6 bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "glass-card py-4" : "py-6 bg-transparent"
+        }`}
     >
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between">
@@ -73,7 +71,6 @@ const Navigation = () => {
                 </button>
               )
             ))}
-            <ThemeToggle />
             <Button asChild className="glass-button bg-primary text-primary-foreground hover:bg-primary/90">
               <PrefetchLink to="/quote">Get a Quote</PrefetchLink>
             </Button>
@@ -81,7 +78,6 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
             <button
               className="p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
