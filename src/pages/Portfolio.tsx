@@ -16,6 +16,16 @@ import {
   LazyPortfolioSceneContent as PortfolioSceneContent,
 } from "@/components/3d/Lazy3DLoader";
 
+// Fallback images for projects without an image_url
+const FALLBACK_IMAGES = [
+  "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80"
+];
+
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -169,9 +179,13 @@ const Portfolio = () => {
                     {/* Project Image */}
                     <div className="relative h-56 overflow-hidden">
                       <img
-                        src={project.image_url || "/placeholder.svg"}
+                        src={project.image_url || FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]}
                         alt={project.title}
                         className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = FALLBACK_IMAGES[index % FALLBACK_IMAGES.length];
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-glow-dark via-glow-dark/50 to-transparent opacity-60" />
 

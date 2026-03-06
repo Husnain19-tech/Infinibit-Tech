@@ -31,7 +31,7 @@ const AIAutomation = () => {
         ]}
         icon={<Bot className="w-4 h-4" />}
         ctaText="Get Started"
-        ctaLink="/#contact"
+        ctaLink="/contact"
       />
 
       {/* Why Choose Section */}
@@ -68,7 +68,7 @@ const AIAutomation = () => {
             <p className="text-xl text-muted-foreground mb-8">
               Let's discuss how AI automation can transform your business operations.
             </p>
-            <Link to="/#contact">
+            <Link to="/contact">
               <Button size="lg" className="glass-button group">
                 Schedule a Consultation
                 <svg

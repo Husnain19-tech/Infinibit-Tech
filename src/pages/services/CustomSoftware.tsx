@@ -61,7 +61,7 @@ const CustomSoftware = () => {
             <p className="text-xl text-muted-foreground mb-8">
               Let's discuss your custom software development requirements.
             </p>
-            <Link to="/#contact">
+            <Link to="/contact">
               <Button size="lg" className="glass-button group">
                 Get a Quote
                 <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">

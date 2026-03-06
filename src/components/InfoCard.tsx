@@ -21,7 +21,7 @@ const InfoCard = ({
     imagePlaceholderIcon
 }: InfoCardProps) => {
     const imageSection = (
-        <div className="relative h-full min-h-[300px] md:min-h-[400px] overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-background">
+        <div className="relative h-full w-full min-h-[250px] overflow-hidden bg-gradient-to-br from-primary/20 to-background">
             {imageUrl ? (
                 <>
                     <img
@@ -45,8 +45,8 @@ const InfoCard = ({
     );
 
     const contentSection = (
-        <div className="flex flex-col justify-center p-8 md:p-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-8">
+        <div className="flex flex-col justify-center p-6 md:p-8 h-full w-full">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 {title.split(' ').map((word, i) => (
                     i === title.split(' ').length - 1 ? (
                         <span key={i} className="neon-text"> {word}</span>
@@ -56,7 +56,7 @@ const InfoCard = ({
                 ))}
             </h2>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
                 {features.map((feature, index) => (
                     <div
                         key={index}
@@ -81,16 +81,16 @@ const InfoCard = ({
 
     return (
         <div className="glass-card overflow-hidden rounded-3xl">
-            <div className="grid md:grid-cols-2 gap-0">
+            <div className="grid md:grid-cols-2 gap-0 items-stretch">
                 {imagePosition === "left" ? (
                     <>
-                        <div className="order-2 md:order-1">{imageSection}</div>
-                        <div className="order-1 md:order-2">{contentSection}</div>
+                        <div className="order-2 md:order-1 h-full w-full">{imageSection}</div>
+                        <div className="order-1 md:order-2 h-full w-full">{contentSection}</div>
                     </>
                 ) : (
                     <>
-                        <div className="order-1">{contentSection}</div>
-                        <div className="order-2">{imageSection}</div>
+                        <div className="order-1 h-full w-full">{contentSection}</div>
+                        <div className="order-2 h-full w-full">{imageSection}</div>
                     </>
                 )}
             </div>

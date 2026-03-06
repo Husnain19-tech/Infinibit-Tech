@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 import { GlowingOrb, ParticleBackground } from "@/components/animations";
 import { fadeInUp, staggerContainer, heroTextReveal } from "@/lib/animations";
+import { Link } from "react-router-dom";
 
 interface ServiceHeroProps {
     title: string;
@@ -24,7 +25,7 @@ const ServiceHero = ({
     images = [],
     icon,
     ctaText = "Get Started",
-    ctaLink = "/#contact"
+    ctaLink = "/contact"
 }: ServiceHeroProps) => {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
@@ -140,7 +141,7 @@ const ServiceHero = ({
                         className="flex gap-4 justify-center pt-4"
                         variants={fadeInUp}
                     >
-                        <a href={ctaLink}>
+                        <Link to={ctaLink}>
                             <motion.div
                                 whileHover={{
                                     scale: 1.05,
@@ -156,7 +157,7 @@ const ServiceHero = ({
                                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </motion.div>
-                        </a>
+                        </Link>
                     </motion.div>
                 </motion.div>
             </div>
